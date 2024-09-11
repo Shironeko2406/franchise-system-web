@@ -2,7 +2,7 @@ const TOKEN_AUTHOR = "accessToken";
 const USER_LOGIN = "userLogin";
 const HOST_DOMAIN =
   // "https://localhost:7194";
-  ""; //;link domain backend
+  "";//Link domain BE
 
 //  Cookie and local storage interaction functions
 
