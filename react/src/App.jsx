@@ -1,9 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Logout from "./Component/Logout";
-import Login from "./Component/Login";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store";
+import Login from "./Student/Page/Login/Login";
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
       <Provider store={store}>
         <Routes>
           <Route path="/" element={<Login></Login>} />
-          <Route path="login" element={<Logout></Logout>} />
         </Routes>
       </Provider>
     </BrowserRouter>
