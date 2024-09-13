@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-import "./Login.css";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);

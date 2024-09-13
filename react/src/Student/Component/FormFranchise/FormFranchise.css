@@ -1,0 +1,46 @@
+.header-carousel-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.header-carousel-item img {
+    object-fit: cover;
+    border-radius: 10px;
+    height: auto;
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.carousel-caption {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-caption .ticket-form {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+@media (min-width: 1200px) {
+
+    .header-carousel-item,
+    .header-carousel-item img {
+        height: 700px;
+    }
+}
+
+@media (max-width: 1199px) {
+
+    .header-carousel-item,
+    .header-carousel-item img {
+        height: 1200px;
+    }
+}
