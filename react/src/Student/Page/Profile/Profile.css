@@ -1,0 +1,69 @@
+/* Avatar section - Căn giữa và thêm khoảng cách giữa các phần tử */
+.avatar-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar-section .ant-avatar {
+    margin-bottom: 10px;
+}
+
+.avatar-section button {
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* Menu column - Điều chỉnh padding và nền */
+.menu-column {
+    background-color: #f0f2f5;
+    padding: 20px;
+    border-radius: 10px; /* Thêm đường viền bo tròn cho phần menu */
+}
+
+/* Profile details - Điều chỉnh khoảng cách và layout */
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.profile-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-label {
+    flex: 0 0 150px; /* Cố định độ rộng cho tiêu đề */
+    font-weight: bold;
+}
+
+.profile-value {
+    flex: 1;
+}
+
+/* List item meta title */
+.ant-list-item-meta-title {
+    font-weight: 500;
+}
+
+/* List item meta description */
+.ant-list-item-meta-description {
+    color: #595959;
+}
+
+/* Anchor styling */
+.ant-list-item a {
+    text-decoration: none;
+    color: #3CBEEE;
+}
+
+/* Change color of icons */
+.ant-list-item .anticon {
+    color: #3CBEEE;
+}
+
+/* Đảm bảo avatar và menu được sắp xếp đẹp */
+.menu-column .ant-menu {
+    margin-top: 20px;
+}
