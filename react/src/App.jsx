@@ -7,6 +7,7 @@ import Register from "./Student/Page/Register/Register";
 import TempUIUser from "./Student/TempUIUser/TempUIUser";
 import HomePage from "./Student/Page/Home/HomePage";
 import Profile from "./Student/Page/Profile/Profile";
+import FranchiseRegistration from "./Student/Page/FranchiseRegistration/FranchiseRegistration";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="home" element={<TempUIUser></TempUIUser>}>
             <Route path="" element={<HomePage></HomePage>}></Route>
             <Route path="profile" element={<Profile></Profile>}></Route>
+            <Route path="franchise" element={<FranchiseRegistration></FranchiseRegistration>}></Route>
           </Route>
         </Routes>
       </Provider>
