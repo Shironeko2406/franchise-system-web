@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./FormFranchise.css";
 import { useDispatch, useSelector } from "react-redux";
 import { GetCityDataActionAsync } from "../../../Redux/ReducerAPI/CityReducer";
+import { useFormik } from "formik";
+import { CreateConsultFranchiseActionAsync } from "../../../Redux/ReducerAPI/ConsultationsReducer";
 
 const FormFranchise = () => {
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const FormFranchise = () => {
 
   useEffect(() => {
     dispatch(GetCityDataActionAsync());
-  }, [dispatch]);
+  }, []);
 
   const handleCityChange = (e) => {
     const cityId = e.target.value;
@@ -23,14 +25,55 @@ const FormFranchise = () => {
     const selectedCityData = cityData.find((city) => city.Id === cityId);
     setDistricts(selectedCityData ? selectedCityData.Districts : []);
     setWards([]); // Reset wards when changing city
+    formFranchiseConsult.setFieldValue("city", cityId); // Set city in Formik
   };
 
   const handleDistrictChange = (e) => {
     const districtId = e.target.value;
     setSelectedDistrict(districtId);
-    const selectedDistrictData = districts.find((district) => district.Id === districtId);
+    const selectedDistrictData = districts.find(
+      (district) => district.Id === districtId
+    );
     setWards(selectedDistrictData ? selectedDistrictData.Wards : []);
+    formFranchiseConsult.setFieldValue("district", districtId); // Set district in Formik
   };
+
+  const formFranchiseConsult = useFormik({
+    initialValues: {
+      customerName: "",
+      phoneNumber: "",
+      email: "",
+      address: "",
+      city: "",
+      district: "",
+      ward: "",
+      budget: "",
+    },
+    onSubmit: (values) => {
+      // Get the selected city, district, and ward names
+      const selectedCityName = cityData.find(
+        (city) => city.Id === values.city
+      )?.Name;
+      const selectedDistrictName = districts.find(
+        (district) => district.Id === values.district
+      )?.Name;
+      const selectedWardName = wards.find(
+        (ward) => ward.Id === values.ward
+      )?.Name;
+
+      const fullAddress = `${values.address}, ${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`;
+
+      // Prepare data to send
+      const datasend = {
+        customerName: values.customerName,
+        phoneNumber: values.phoneNumber,
+        email: values.email,
+        address: fullAddress, // Full address with house number, ward, district, and city
+        budget: values.budget,
+      };
+      dispatch(CreateConsultFranchiseActionAsync(datasend));
+    },
+  });
 
   return (
     <div className="header-carousel-item">
@@ -70,14 +113,17 @@ const FormFranchise = () => {
                 <h2 className="text-dark text-uppercase mb-4">
                   Booking Franchise
                 </h2>
-                <form>
+                <form onSubmit={formFranchiseConsult.handleSubmit}>
                   <div className="row g-4">
                     <div className="col-12">
                       <input
                         type="text"
                         className="form-control border-0 py-2"
-                        id="name"
+                        id="customerName"
+                        name="customerName"
                         placeholder="Your Name"
+                        onChange={formFranchiseConsult.handleChange}
+                        value={formFranchiseConsult.values.customerName}
                       />
                     </div>
                     <div className="col-12 col-xl-6">
@@ -85,15 +131,21 @@ const FormFranchise = () => {
                         type="email"
                         className="form-control border-0 py-2"
                         id="email"
+                        name="email"
                         placeholder="Your Email"
+                        onChange={formFranchiseConsult.handleChange}
+                        value={formFranchiseConsult.values.email}
                       />
                     </div>
                     <div className="col-12 col-xl-6">
                       <input
                         type="phone"
                         className="form-control border-0 py-2"
-                        id="phone"
+                        id="phoneNumber"
+                        name="phoneNumber"
                         placeholder="Phone"
+                        onChange={formFranchiseConsult.handleChange}
+                        value={formFranchiseConsult.values.phoneNumber}
                       />
                     </div>
 
@@ -134,6 +186,12 @@ const FormFranchise = () => {
                     <div className="col-12">
                       <select
                         className="form-select border-0 py-2"
+                        onChange={(e) =>
+                          formFranchiseConsult.setFieldValue(
+                            "ward",
+                            e.target.value
+                          )
+                        }
                         disabled={!wards.length}
                       >
                         <option value="">Chọn phường xã</option>
@@ -147,15 +205,30 @@ const FormFranchise = () => {
 
                     <div className="col-12">
                       <input
+                        type="text"
+                        className="form-control border-0 py-2"
+                        id="address"
+                        name="address"
+                        placeholder="House number, Street name"
+                        onChange={formFranchiseConsult.handleChange}
+                        value={formFranchiseConsult.values.address}
+                      />
+                    </div>
+
+                    <div className="col-12">
+                      <input
                         type="number"
                         className="form-control border-0 py-2"
-                        id="number"
-                        placeholder="Guest"
+                        id="budget"
+                        name="budget"
+                        placeholder="Budget"
+                        onChange={formFranchiseConsult.handleChange}
+                        value={formFranchiseConsult.values.budget}
                       />
                     </div>
                     <div className="col-12">
                       <button
-                        type="button"
+                        type="submit"
                         className="btn btn-primary w-100 py-2 px-5"
                       >
                         Book Now
