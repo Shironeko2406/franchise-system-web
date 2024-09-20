@@ -1,7 +1,9 @@
 import React from 'react';
-import { Form, Input, Button, Row, Col, Select } from 'antd';
+import { Form, Input, Button, Row, Col, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
 
-const { Option } = Select;
+const { Title } = Typography;
 
 const FranchiseRegistration = () => {
   const [form] = Form.useForm();
@@ -15,27 +17,104 @@ const FranchiseRegistration = () => {
   };
 
   return (
-    <div style={{ backgroundColor: '#ecedf3', minHeight: '100vh', padding: '50px 0' }}>
+    <div style={{ backgroundColor: '#f0f2f5', minHeight: '100vh', padding: '50px 0' }}>
       <Row justify="center">
         <Col span={12}>
-          <div style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-            <h2>Franchise Registration</h2>
+          <div style={{ backgroundColor: '#ffffff', padding: '40px', borderRadius: '10px', boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)' }}>
+            <Title level={3} style={{ textAlign: 'center', marginBottom: '40px' }}>Franchise Registration</Title>
             <Form
               form={form}
               layout="vertical"
-              name="franchise_registration"
+              name="customer_information"
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
+              autoComplete="off"
             >
-              <Row gutter={16}>
-                {/* Full Name */}
+              <Row gutter={24}>
+                {/* Name */}
+                <Col span={24}>
+                  <Form.Item
+                    label="Name"
+                    name="name"
+                    rules={[{ required: true, message: 'Please input your name!' }]}
+                  >
+                    <Input placeholder="Enter your name" size="large" />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={24}>
+                {/* Address */}
+                <Col span={24}>
+                  <Form.Item
+                    label="Address"
+                    name="address"
+                    rules={[{ required: true, message: 'Please input your address!' }]}
+                  >
+                    <Input placeholder="Enter your address" size="large" />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={24}>
+                {/* City */}
+                <Col span={8}>
+                  <Form.Item
+                    label="City"
+                    name="city"
+                    rules={[{ required: true, message: 'Please select your city!' }]}
+                  >
+                    <Input placeholder="Enter city" size="large" />
+                  </Form.Item>
+                </Col>
+
+                {/* District */}
+                <Col span={8}>
+                  <Form.Item
+                    label="District"
+                    name="district"
+                    rules={[{ required: true, message: 'Please select your district!' }]}
+                  >
+                    <Input placeholder="Enter district" size="large" />
+                  </Form.Item>
+                </Col>
+
+                {/* Ward */}
+                <Col span={8}>
+                  <Form.Item
+                    label="Ward"
+                    name="ward"
+                    rules={[{ required: true, message: 'Please select your ward!' }]}
+                  >
+                    <Input placeholder="Enter ward" size="large" />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={24}>
+                {/* Position Image URL */}
+                <Col span={24}>
+                  <Form.Item
+                    label="Position Image"
+                    name="positionImageURL"
+                    rules={[{ required: true, message: 'Please upload your position image!' }]}
+                  >
+                    <Upload name="positionImage" listType="picture" maxCount={1}>
+                      <Button icon={<UploadOutlined />}>Upload Image</Button>
+                    </Upload>
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={24}>
+                {/* Phone Number */}
                 <Col span={12}>
                   <Form.Item
-                    label="Full Name"
-                    name="fullName"
-                    rules={[{ required: true, message: 'Please input your full name!' }]}
+                    label="Phone Number"
+                    name="phoneNumber"
+                    rules={[{ required: true, message: 'Please input your phone number!' }]}
                   >
-                    <Input placeholder="Enter your full name" />
+                    <Input placeholder="Enter your phone number" size="large" />
                   </Form.Item>
                 </Col>
 
@@ -49,108 +128,14 @@ const FranchiseRegistration = () => {
                       { type: 'email', message: 'The input is not valid E-mail!' },
                     ]}
                   >
-                    <Input placeholder="Enter your email" />
-                  </Form.Item>
-                </Col>
-              </Row>
-
-              <Row gutter={16}>
-                {/* Phone */}
-                <Col span={12}>
-                  <Form.Item
-                    label="Phone"
-                    name="phone"
-                    rules={[{ required: true, message: 'Please input your phone number!' }]}
-                  >
-                    <Input placeholder="Enter your phone number" />
-                  </Form.Item>
-                </Col>
-
-                {/* Position */}
-                <Col span={12}>
-                  <Form.Item
-                    label="Position"
-                    name="position"
-                    rules={[{ required: true, message: 'Please select your position!' }]}
-                  >
-                    <Select placeholder="Select your position">
-                      <Option value="manager">Manager</Option>
-                      <Option value="owner">Owner</Option>
-                      <Option value="investor">Investor</Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
-
-              <Row gutter={16}>
-                {/* Industry */}
-                <Col span={12}>
-                  <Form.Item
-                    label="Industry"
-                    name="industry"
-                    rules={[{ required: true, message: 'Please select your industry!' }]}
-                  >
-                    <Select placeholder="Select your industry">
-                      <Option value="food">Food & Beverage</Option>
-                      <Option value="retail">Retail</Option>
-                      <Option value="service">Service</Option>
-                      <Option value="education">Education</Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-
-                {/* Business Experience */}
-                <Col span={12}>
-                  <Form.Item
-                    label="Business Experience"
-                    name="businessExperience"
-                    rules={[{ required: true, message: 'Please input your business experience!' }]}
-                  >
-                    <Input placeholder="Describe your business experience" />
-                  </Form.Item>
-                </Col>
-              </Row>
-
-              <Row gutter={16}>
-                {/* Finance */}
-                <Col span={12}>
-                  <Form.Item
-                    label="Finance"
-                    name="finance"
-                    rules={[{ required: true, message: 'Please input your available finance!' }]}
-                  >
-                    <Input placeholder="Enter your available finance" />
-                  </Form.Item>
-                </Col>
-
-                {/* Human Resources */}
-                <Col span={12}>
-                  <Form.Item
-                    label="Human Resources"
-                    name="humanResources"
-                    rules={[{ required: true, message: 'Please input your human resources capabilities!' }]}
-                  >
-                    <Input placeholder="Describe your human resources capabilities" />
-                  </Form.Item>
-                </Col>
-              </Row>
-
-              <Row gutter={16}>
-                {/* Business Time */}
-                <Col span={12}>
-                  <Form.Item
-                    label="Business Time"
-                    name="businessTime"
-                    rules={[{ required: true, message: 'Please input your business time!' }]}
-                  >
-                    <Input placeholder="Enter how long your business has been operational" />
+                    <Input placeholder="Enter your email" size="large" />
                   </Form.Item>
                 </Col>
               </Row>
 
               {/* Submit Button */}
               <Form.Item>
-                <Button type="primary" htmlType="submit" block>
+                <Button type="primary" htmlType="submit" size="large" style={{ width: '100%', marginTop: '20px' }}>
                   Submit
                 </Button>
               </Form.Item>
