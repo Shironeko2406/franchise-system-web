@@ -14,9 +14,9 @@ function App() {
     <BrowserRouter>
       <Provider store={store}>
         <Routes>
-          <Route path="/" element={<Login></Login>} />
+          <Route path="login" element={<Login></Login>} />
           <Route path="register" element={<Register></Register>} />
-          <Route path="home" element={<TempUIUser></TempUIUser>}>
+          <Route path="" element={<TempUIUser></TempUIUser>}>
             <Route path="" element={<HomePage></HomePage>}></Route>
             <Route path="profile" element={<Profile></Profile>}></Route>
             <Route path="register-agency" element={<AgencyRegistration />}></Route>

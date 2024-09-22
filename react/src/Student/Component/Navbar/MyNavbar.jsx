@@ -1,5 +1,6 @@
 import React from 'react'
 import "./Navbar.css"
+import { NavLink } from 'react-router-dom'
 
 const MyNavbar = () => {
   return (
@@ -8,7 +9,7 @@ const MyNavbar = () => {
         <a href className="navbar-brand p-0">
           <h1 className="display-6 text-dark">
             <i className="fas fa-swimmer text-primary me-3" />
-            WaterLand
+            FutureTech
           </h1>
           {/* <img src="img/logo.png" alt="Logo"> */}
         </a>
@@ -22,9 +23,9 @@ const MyNavbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav mx-auto py-0">
-            <a href="#" className="nav-item nav-link active">
+            <NavLink to="/" className="nav-item nav-link active">
               Home
-            </a>
+            </NavLink>
             <a href="#" className="nav-item nav-link">
               About
             </a>
@@ -84,12 +85,12 @@ const MyNavbar = () => {
               <i className="fab fa-linkedin-in" />
             </a>
           </div>
-          <a
-            href="#"
+          <NavLink
+            to="/register-agency"
             className="btn btn-primary rounded-pill py-2 px-4 flex-shrink-0"
           >
             Get Started
-          </a>
+          </NavLink>
         </div>
       </nav>
     </div>
