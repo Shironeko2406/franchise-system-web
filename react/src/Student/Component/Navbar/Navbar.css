@@ -1,7 +1,7 @@
 
 
 /*** Navbar Start ***/
-.nav-bar {
+/* .nav-bar {
     background: #fff;
 }
 
@@ -88,10 +88,10 @@
     .sticky-top .navbar-light .navbar-nav .nav-link {
         padding: 12px 0;
     }
-}
+} */
 
 /*** Button Start ***/
-.btn {
+/* .btn {
     font-weight: 600;
     transition: .5s;
 }
@@ -160,4 +160,4 @@
 .btn.btn-dark:hover {
     color: #3CBEEE;
     background: #EDEDED;
-}
+} */

@@ -1,18 +1,41 @@
-import React from 'react'
-import "./Navbar.css"
-import { NavLink } from 'react-router-dom'
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 const MyNavbar = () => {
+  const navLinks = [
+    { name: "Trang Chủ", href: "index.html", active: true },
+    { name: "Thông Tin", href: "about.html" },
+    { name: "Dịch Vụ", href: "service.html" },
+    { name: "Bài Đăng", href: "blog.html" },
+    { name: "Liên Hệ", href: "contact.html" }
+  ];
+
+  const dropdownLinks = [
+    { name: "Our Feature", href: "feature.html" },
+    { name: "Our Gallery", href: "gallery.html" },
+    { name: "Attractions", href: "attraction.html" },
+    { name: "Ticket Packages", href: "package.html" },
+    { name: "Our Team", href: "team.html" },
+    { name: "Testimonial", href: "testimonial.html" },
+    { name: "404 Page", href: "404.html" }
+  ];
+
+  const socialLinks = [
+    { icon: "fab fa-facebook-f", href: "#" },
+    { icon: "fab fa-twitter", href: "#" },
+    { icon: "fab fa-instagram", href: "#" },
+    { icon: "fab fa-linkedin-in", href: "#" }
+  ];
+
   return (
     <div className="container-fluid nav-bar sticky-top px-4 py-2 py-lg-0">
       <nav className="navbar navbar-expand-lg navbar-light">
-        <a href className="navbar-brand p-0">
+        <NavLink to="/" className="navbar-brand p-0">
           <h1 className="display-6 text-dark">
-            <i className="fas fa-swimmer text-primary me-3" />
+            <i class="fab fa-hubspot text-primary me-3"></i>
             FutureTech
           </h1>
-          {/* <img src="img/logo.png" alt="Logo"> */}
-        </a>
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -23,18 +46,16 @@ const MyNavbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav mx-auto py-0">
-            <NavLink to="/" className="nav-item nav-link active">
-              Home
-            </NavLink>
-            <a href="#" className="nav-item nav-link">
-              About
-            </a>
-            <a href="#" className="nav-item nav-link">
-              Service
-            </a>
-            <a href="#" className="nav-item nav-link">
-              Blog
-            </a>
+            {navLinks.map((link, index) => (
+              <a
+                key={index}
+                href={link.href}
+                className={`nav-item nav-link ${link.active ? "active" : ""}`}
+              >
+                {link.name}
+              </a>
+            ))}
+
             <div className="nav-item dropdown">
               <a
                 href="#"
@@ -44,57 +65,35 @@ const MyNavbar = () => {
                 Pages
               </a>
               <div className="dropdown-menu m-0">
-                <a href="#" className="dropdown-item">
-                  Our Feature
-                </a>
-                <a href="#" className="dropdown-item">
-                  Our Gallery
-                </a>
-                <a href="#" className="dropdown-item">
-                  Attractions
-                </a>
-                <a href="#" className="dropdown-item">
-                  Ticket Packages
-                </a>
-                <a href="#" className="dropdown-item">
-                  Our Team
-                </a>
-                <a href="#" className="dropdown-item">
-                  Testimonial
-                </a>
-                <a href="#" className="dropdown-item">
-                  404 Page
-                </a>
+                {dropdownLinks.map((item, index) => (
+                  <a key={index} href={item.href} className="dropdown-item">
+                    {item.name}
+                  </a>
+                ))}
               </div>
             </div>
-            <a href="#" className="nav-item nav-link">
-              Contact
-            </a>
           </div>
           <div className="team-icon d-none d-xl-flex justify-content-center me-3">
-            <a className="btn btn-square btn-light rounded-circle mx-1" href>
-              <i className="fab fa-facebook-f" />
-            </a>
-            <a className="btn btn-square btn-light rounded-circle mx-1" href>
-              <i className="fab fa-twitter" />
-            </a>
-            <a className="btn btn-square btn-light rounded-circle mx-1" href>
-              <i className="fab fa-instagram" />
-            </a>
-            <a className="btn btn-square btn-light rounded-circle mx-1" href>
-              <i className="fab fa-linkedin-in" />
-            </a>
+            {socialLinks.map((social, index) => (
+              <a
+                key={index}
+                className="btn btn-square btn-light rounded-circle mx-1"
+                href={social.href}
+              >
+                <i className={social.icon} />
+              </a>
+            ))}
           </div>
-          <NavLink
-            to="/register-agency"
+          <a
+            href="#"
             className="btn btn-primary rounded-pill py-2 px-4 flex-shrink-0"
           >
             Get Started
-          </NavLink>
+          </a>
         </div>
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default MyNavbar
+export default MyNavbar;
