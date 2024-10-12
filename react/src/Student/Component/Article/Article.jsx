@@ -4,7 +4,7 @@ const features = [
   {
     id: 1,
     imgSrc: "/img/feature-1.jpg",
-    title: "Best Pools",
+    title: "Lập Trình Web",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis porro soluta voluptatum laborum mollitia blanditiis suscipit.",
     delay: "0.2s",
@@ -12,7 +12,7 @@ const features = [
   {
     id: 2,
     imgSrc: "/img/feature-2.jpg",
-    title: "Waterslides",
+    title: "Lập Trình Game",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis porro soluta voluptatum laborum mollitia blanditiis suscipit.",
     delay: "0.4s",
@@ -20,7 +20,7 @@ const features = [
   {
     id: 3,
     imgSrc: "/img/feature-3.jpg",
-    title: "River Rides",
+    title: "Lập Trình Di Động",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis porro soluta voluptatum laborum mollitia blanditiis suscipit.",
     delay: "0.6s",
