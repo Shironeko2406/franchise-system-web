@@ -20,10 +20,10 @@ export const CreateConsultFranchiseActionAsync = (data) => {
       const res = await httpClient.post(`/api/v1/consultations`, data);
       if (res.isSuccess && res.data) {
         message.success(res.message);
-      } else if (res.isSuccess && !res.data) {
-        message.error(res.message);
+        return true;
       } else {
         message.error(res.message);
+        return false;
       }
     } catch (error) {
       console.error(error);

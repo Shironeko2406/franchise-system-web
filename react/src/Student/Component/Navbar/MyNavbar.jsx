@@ -32,7 +32,7 @@ const MyNavbar = () => {
       <nav className="navbar navbar-expand-lg navbar-light">
         <NavLink to="/" className="navbar-brand p-0">
           <h1 className="display-6 text-dark">
-            <i class="fab fa-hubspot text-primary me-3"></i>
+            <i className="fab fa-hubspot text-primary me-3"></i>
             FutureTech
           </h1>
         </NavLink>
