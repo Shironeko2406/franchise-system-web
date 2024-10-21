@@ -22,7 +22,7 @@ function App() {
             <Route path="" element={<HomePage></HomePage>}></Route>
             <Route path="/consult" element={<ConsultRegis/>}></Route>
             {/* <Route path="profile" element={<Profile></Profile>}></Route> */}
-            {/* <Route path="register-agency" element={<AgencyRegistration />}></Route> */}
+            <Route path="register-agency" element={<AgencyRegistration />}></Route>
           </Route>
           {/* <Route path="user/detail/:id" element={<TestPage/>} /> */}
 

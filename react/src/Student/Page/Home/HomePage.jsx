@@ -10,6 +10,7 @@ import TeamMember from "../../Component/TeamMember/TeamMember";
 import TopFeedback from "../../Component/TopFeedback/TopFeedback";
 import Article from "../../Component/Article/Article";
 import Course from "../../Component/Course/Course";
+import ViewCourse from "../../Component/ViewCourse/ViewCourse";
 
 const HomePage = () => {
   return (
@@ -17,6 +18,7 @@ const HomePage = () => {
       {/* <FormFranchise></FormFranchise> */}
       <BookCourse/>
       <Article/>
+      <ViewCourse/>
       <AboutUs/>
       <OurService/>
       <PackagesTicket/>
