@@ -42,7 +42,7 @@ export const RegisterAgencyActionAsync = (data) => {
     }
 };
 
-export const GetAgencyAddresses = () => {
+export const GetAgencyAddressesActionAsync = () => {
     return async (dispatch) => {
         try {
             const response = await httpClient.get(`api/v1/agencies/active/addresses`);

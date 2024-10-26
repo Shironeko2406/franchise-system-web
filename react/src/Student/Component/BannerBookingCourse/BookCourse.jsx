@@ -4,8 +4,9 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { GetAgencyAddresses } from "../../../Redux/ReducerAPI/AgencyReducer";
-import { GetAllCoursesAvailable } from "../../../Redux/ReducerAPI/CourseReducer";
+import { GetAgencyAddressesActionAsync } from "../../../Redux/ReducerAPI/AgencyReducer";
+import { GetAllCoursesAvailableActionAsync } from "../../../Redux/ReducerAPI/CourseReducer";
+import { RegisterCourseActionAsync } from "../../../Redux/ReducerAPI/RegisterCourseReducer";
 
 const carouselData = [
   {
@@ -45,8 +46,8 @@ export default function BookCourse() {
   const { course } = useSelector((state) => state.CourseReducer);
 
   useEffect(() => {
-    dispatch(GetAgencyAddresses());
-    dispatch(GetAllCoursesAvailable());
+    dispatch(GetAgencyAddressesActionAsync());
+    dispatch(GetAllCoursesAvailableActionAsync());
   }, [dispatch]);
 
   const formBookCourse = useFormik({
@@ -60,9 +61,18 @@ export default function BookCourse() {
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
       const formattedDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-      const valuesSend = { ...values, date: formattedDate };
+      const valuesSend = {
+        studentName: values.name,
+        email: values.email,
+        phoneNumber: values.phone,
+        agencyId: values.agency,
+        courseId: values.course,
+        date: formattedDate
+      };
       console.log("Register Form:", valuesSend);
-      resetForm();
+      dispatch(RegisterCourseActionAsync(valuesSend)).then(() => {
+        resetForm();
+      });;
     },
   });
 

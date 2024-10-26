@@ -38,7 +38,7 @@ export const GetCourseActionAsync = (courseCategoryId) => {
   };
 };
 
-export const GetAllCoursesAvailable = () => {
+export const GetAllCoursesAvailableActionAsync = () => {
   return async (dispatch) => {
     try {
       const response = await httpClient.get(`api/v1/courses/available`);
