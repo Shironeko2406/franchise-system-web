@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAgencyAddresses } from "../../../Redux/ReducerAPI/AgencyReducer";
+import { GetAllCoursesAvailable } from "../../../Redux/ReducerAPI/CourseReducer";
 
 const carouselData = [
   {
@@ -41,9 +42,11 @@ export default function BookCourse() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useDispatch();
   const { agencyData } = useSelector((state) => state.AgencyReducer);
+  const { course } = useSelector((state) => state.CourseReducer);
 
   useEffect(() => {
     dispatch(GetAgencyAddresses());
+    dispatch(GetAllCoursesAvailable());
   }, [dispatch]);
 
   const formBookCourse = useFormik({
@@ -185,8 +188,11 @@ export default function BookCourse() {
                             value={formBookCourse.values.course}
                           >
                             <option value="">Chọn khóa học bạn muốn tư vấn</option>
-                            <option value="course1">Khóa học 1</option>
-                            <option value="course2">Khóa học 2</option>
+                            {course.map((courseItem) => (
+                              <option key={courseItem.id} value={courseItem.id}>
+                                {courseItem.name}
+                              </option>
+                            ))}
                           </select>
                           {formBookCourse.touched.course && formBookCourse.errors.course && (
                             <div className="invalid-feedback text-danger">{formBookCourse.errors.course}</div>

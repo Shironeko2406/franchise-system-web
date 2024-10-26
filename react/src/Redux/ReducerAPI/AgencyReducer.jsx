@@ -45,10 +45,9 @@ export const RegisterAgencyActionAsync = (data) => {
 export const GetAgencyAddresses = () => {
     return async (dispatch) => {
         try {
-            const response = await httpClient.get(`/api/v1/agencies/addresses`);
-            console.log("response", response);
+            const response = await httpClient.get(`api/v1/agencies/active/addresses`);
             if (response.isSuccess) {
-                dispatch(setAgency(response.data))
+                dispatch(setAgency(response.data));
             } else {
                 throw new Error(response.message);
             }
