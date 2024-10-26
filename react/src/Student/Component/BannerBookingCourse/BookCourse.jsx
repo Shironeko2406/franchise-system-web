@@ -1,85 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 import { useFormik } from "formik";
+import * as Yup from 'yup';
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { CreateConsultFranchiseActionAsync } from "../../../Redux/ReducerAPI/ConsultationsReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { GetAgencyAddresses } from "../../../Redux/ReducerAPI/AgencyReducer";
 
 const carouselData = [
   {
     imgSrc: "/img/carousel-1.jpg",
     title: "Chào mừng học viên",
     heading: "Tham gia học ngay",
-    description: `Lorem Ipsum is simply dummy text of the printing and 
-    typesetting industry. Lorem Ipsum has been the industry's 
-    standard dummy...`,
-    buttonText: "Tư vấn ngay",
-    formType: "register", // Form đăng ký
-  },
-  {
-    imgSrc: "/img/carousel-2.jpg",
-    title: "Chào mừng học viên",
-    heading: "Tham gia học ngay",
-    description: `Lorem Ipsum is simply dummy text of the printing and 
-    typesetting industry. Lorem Ipsum has been the industry's 
-    standard dummy...`,
-    buttonText: "Đăng kí khóa học",
-    formType: "consult", // Form tư vấn
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy...",
+    formType: "register",
   },
 ];
 
-const BookCourse = () => {
+const validationSchema = Yup.object({
+  name: Yup.string()
+    .required('Vui lòng nhập tên của bạn')
+    .min(2, 'Tên phải có ít nhất 2 ký tự')
+    .max(50, 'Tên không được vượt quá 50 ký tự'),
+  email: Yup.string()
+    .required('Vui lòng nhập địa chỉ email')
+    .email('Địa chỉ email không hợp lệ'),
+  phone: Yup.string()
+    .required('Vui lòng nhập số điện thoại')
+    .matches(/^0[0-9]+$/, "Số điện thoại phải bắt đầu bằng số 0")
+    .min(10, 'Số điện thoại phải có ít nhất 10 chữ số')
+    .max(11, 'Số điện thoại không được vượt quá 11 chữ số'),
+  agency: Yup.string()
+    .required('Vui lòng chọn địa chỉ chi nhánh'),
+  course: Yup.string()
+    .required('Vui lòng chọn khóa học bạn muốn tư vấn'),
+});
+
+
+export default function BookCourse() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useDispatch();
+  const { agencyData } = useSelector((state) => state.AgencyReducer);
 
-  const handleNextSlide = () => {
-    const nextIndex = (currentIndex + 1) % carouselData.length;
-    setCurrentIndex(nextIndex);
-  };
+  useEffect(() => {
+    dispatch(GetAgencyAddresses());
+  }, [dispatch]);
 
   const formBookCourse = useFormik({
     initialValues: {
       name: "",
       email: "",
       phone: "",
-      guest: "",
-      date: "",
-      package: "",
+      agency: "",
+      course: "",
     },
+    validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      const formattedDate = moment(values.date).format(
-        "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
-      );
+      const formattedDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
       const valuesSend = { ...values, date: formattedDate };
       console.log("Register Form:", valuesSend);
       resetForm();
     },
   });
 
-  const formConsult = useFormik({
-    initialValues: {
-      customerName: "",
-      phoneNumber: "",
-      email: "",
-    },
-    onSubmit: (values, { resetForm }) => {
-      dispatch(CreateConsultFranchiseActionAsync(values))
-        .then((response) => {
-          if (response) {
-            resetForm();
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  });
-
+  const handlePhoneChange = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    formBookCourse.setFieldValue('phone', value);
+  };
   return (
     <Carousel
       activeIndex={currentIndex}
       onSelect={setCurrentIndex}
       interval={null}
+      indicators={false}
     >
       {carouselData.map((item, index) => (
         <Carousel.Item key={index}>
@@ -100,146 +93,111 @@ const BookCourse = () => {
                       {item.heading}
                     </h1>
                     <p className="mb-4 fs-5">{item.description}</p>
-                    <div className="d-flex flex-shrink-0">
-                      <button
-                        className="btn btn-primary rounded-pill text-white py-3 px-5"
-                        onClick={handleNextSlide}
-                      >
-                        {item.buttonText}
-                      </button>
-                    </div>
                   </div>
                 </div>
 
                 <div className="col-xl-5">
-                  <div className="ticket-form p-5">
-                    <h2 className="text-dark text-uppercase mb-4">
-                      {item.formType === "register"
-                        ? "Đăng Kí khóa học"
-                        : "Tư Vấn Ngay"}
+                  <div className="ticket-form p-5 bg-white rounded-lg shadow-lg">
+                    <h2 className="text-primary text-uppercase mb-4 text-center">
+                      Tư Vấn Khóa Học
                     </h2>
-                    <form
-                      onSubmit={
-                        item.formType === "register"
-                          ? formBookCourse.handleSubmit
-                          : formConsult.handleSubmit
-                      }
-                    >
+                    <form onSubmit={formBookCourse.handleSubmit}>
                       <div className="row g-4">
                         <div className="col-12">
                           <input
                             type="text"
-                            className="form-control border-0 py-2"
-                            id={
-                              item.formType === "register"
-                                ? "name"
-                                : "customerName"
-                            }
-                            placeholder="Your Name"
-                            onChange={
-                              item.formType === "register"
-                                ? formBookCourse.handleChange
-                                : formConsult.handleChange
-                            }
-                            value={
-                              item.formType === "register"
-                                ? formBookCourse.values.name
-                                : formConsult.values.customerName
-                            }
+                            className={`form-control border-0 py-2 bg-light ${formBookCourse.touched.name && formBookCourse.errors.name ? 'is-invalid' : ''
+                              }`}
+                            id="name"
+                            name="name"
+                            placeholder="Tên của bạn"
+                            onChange={formBookCourse.handleChange}
+                            onBlur={formBookCourse.handleBlur}
+                            value={formBookCourse.values.name}
                           />
+                          {formBookCourse.touched.name && formBookCourse.errors.name && (
+                            <div className="invalid-feedback text-danger">{formBookCourse.errors.name}</div>
+                          )}
                         </div>
-
-                        {item.formType === "register" && (
-                          <>
-                            <div className="col-12 col-xl-6">
-                              <input
-                                type="email"
-                                className="form-control border-0 py-2"
-                                id="email"
-                                placeholder="Your Email"
-                                onChange={formBookCourse.handleChange}
-                                value={formBookCourse.values.email}
-                              />
-                            </div>
-                            <div className="col-12 col-xl-6">
-                              <input
-                                type="text"
-                                className="form-control border-0 py-2"
-                                id="phone"
-                                placeholder="Phone"
-                                onChange={formBookCourse.handleChange}
-                                value={formBookCourse.values.phone}
-                              />
-                            </div>
-                            <div className="col-12">
-                              <select
-                                className="form-select border-0 py-2"
-                                aria-label="Default select example"
-                                id="package"
-                                onChange={formBookCourse.handleChange}
-                                value={formBookCourse.values.package}
-                              >
-                                <option value="" disabled>
-                                  Select Packages
-                                </option>
-                                <option value="1">Family Packages</option>
-                                <option value="2">Basic Packages</option>
-                                <option value="3">Premium Packages</option>
-                              </select>
-                            </div>
-                            <div className="col-12">
-                              <input
-                                className="form-control border-0 py-2"
-                                type="date"
-                                id="date"
-                                onChange={formBookCourse.handleChange}
-                                value={formBookCourse.values.date}
-                              />
-                            </div>
-                            <div className="col-12">
-                              <input
-                                type="number"
-                                className="form-control border-0 py-2"
-                                id="guest"
-                                placeholder="Guest"
-                                onChange={formBookCourse.handleChange}
-                                value={formBookCourse.values.guest}
-                              />
-                            </div>
-                          </>
-                        )}
-
-                        {item.formType === "consult" && (
-                          <>
-                            <div className="col-12 col-xl-6">
-                              <input
-                                type="email"
-                                className="form-control border-0 py-2"
-                                id="email"
-                                placeholder="Your Email"
-                                onChange={formConsult.handleChange}
-                                value={formConsult.values.email}
-                              />
-                            </div>
-                            <div className="col-12 col-xl-6">
-                              <input
-                                type="text"
-                                className="form-control border-0 py-2"
-                                id="phoneNumber"
-                                placeholder="Your Phone"
-                                onChange={formConsult.handleChange}
-                                value={formConsult.values.phoneNumber}
-                              />
-                            </div>
-                          </>
-                        )}
-
+                        <div className="col-12 col-xl-6">
+                          <input
+                            type="email"
+                            className={`form-control border-0 py-2 bg-light ${formBookCourse.touched.email && formBookCourse.errors.email ? 'is-invalid' : ''
+                              }`}
+                            id="email"
+                            name="email"
+                            placeholder="Địa chỉ email của bạn"
+                            onChange={formBookCourse.handleChange}
+                            onBlur={formBookCourse.handleBlur}
+                            value={formBookCourse.values.email}
+                          />
+                          {formBookCourse.touched.email && formBookCourse.errors.email && (
+                            <div className="invalid-feedback text-danger">{formBookCourse.errors.email}</div>
+                          )}
+                        </div>
+                        <div className="col-12 col-xl-6">
+                          <input
+                            type="tel"
+                            className={`form-control border-0 py-2 bg-light ${formBookCourse.touched.phone && formBookCourse.errors.phone ? 'is-invalid' : ''
+                              }`}
+                            id="phone"
+                            name="phone"
+                            placeholder="Số điện thoại"
+                            onChange={handlePhoneChange}
+                            onBlur={formBookCourse.handleBlur}
+                            value={formBookCourse.values.phone}
+                          />
+                          {formBookCourse.touched.phone && formBookCourse.errors.phone && (
+                            <div className="invalid-feedback text-danger">{formBookCourse.errors.phone}</div>
+                          )}
+                        </div>
+                        <div className="col-12">
+                          <select
+                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.agency && formBookCourse.errors.agency ? 'is-invalid' : ''
+                              }`}
+                            aria-label="Default select example"
+                            id="agency"
+                            name="agency"
+                            onChange={formBookCourse.handleChange}
+                            onBlur={formBookCourse.handleBlur}
+                            value={formBookCourse.values.agency}
+                          >
+                            <option value="">Chọn chi nhánh bạn muốn học</option>
+                            {agencyData.map((agency) => (
+                              <option key={agency.id} value={agency.id}>
+                                {agency.fullAddress}
+                              </option>
+                            ))}
+                          </select>
+                          {formBookCourse.touched.agency && formBookCourse.errors.agency && (
+                            <div className="invalid-feedback text-danger">{formBookCourse.errors.agency}</div>
+                          )}
+                        </div>
+                        <div className="col-12">
+                          <select
+                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.course && formBookCourse.errors.course ? 'is-invalid' : ''
+                              }`}
+                            aria-label="Default select example"
+                            id="course"
+                            name="course"
+                            onChange={formBookCourse.handleChange}
+                            onBlur={formBookCourse.handleBlur}
+                            value={formBookCourse.values.course}
+                          >
+                            <option value="">Chọn khóa học bạn muốn tư vấn</option>
+                            <option value="course1">Khóa học 1</option>
+                            <option value="course2">Khóa học 2</option>
+                          </select>
+                          {formBookCourse.touched.course && formBookCourse.errors.course && (
+                            <div className="invalid-feedback text-danger">{formBookCourse.errors.course}</div>
+                          )}
+                        </div>
                         <div className="col-12">
                           <button
                             type="submit"
-                            className="btn btn-primary w-100 py-2 px-5"
+                            className="btn btn-primary w-100 py-2 px-5 text-white font-weight-bold"
                           >
-                            {item.formType === "register" ? "Đăng Kí" : "Nộp"}
+                            Tư Vấn
                           </button>
                         </div>
                       </div>
@@ -253,6 +211,4 @@ const BookCourse = () => {
       ))}
     </Carousel>
   );
-};
-
-export default BookCourse;
+} 
