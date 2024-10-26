@@ -50,7 +50,7 @@ export const GetAllCoursesAvailableActionAsync = () => {
       }
     } catch (error) {
       console.error("Error fetching agencies:", error);
-      message.error("Đã xảy ra lỗi khi lấy danh sách chi nhánh.");
+      message.error("Đã xảy ra lỗi khi lấy danh sách khóa học!");
     }
   }
 };
