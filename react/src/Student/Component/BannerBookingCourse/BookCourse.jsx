@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetAgencyAddressesActionAsync } from "../../../Redux/ReducerAPI/AgencyReducer";
 import { GetAllCoursesAvailableActionAsync } from "../../../Redux/ReducerAPI/CourseReducer";
 import { RegisterCourseActionAsync } from "../../../Redux/ReducerAPI/RegisterCourseReducer";
+import { Spin } from "antd";
 
 const carouselData = [
   {
@@ -44,6 +45,7 @@ export default function BookCourse() {
   const dispatch = useDispatch();
   const { agencyData } = useSelector((state) => state.AgencyReducer);
   const { course } = useSelector((state) => state.CourseReducer);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   useEffect(() => {
     dispatch(GetAgencyAddressesActionAsync());
@@ -60,6 +62,7 @@ export default function BookCourse() {
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
+      setIsLoading(true); // Set loading state to true
       const formattedDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
       const valuesSend = {
         studentName: values.name,
@@ -70,9 +73,11 @@ export default function BookCourse() {
         date: formattedDate
       };
       console.log("Register Form:", valuesSend);
-      dispatch(RegisterCourseActionAsync(valuesSend)).then(() => {
-        resetForm();
-      });;
+      dispatch(RegisterCourseActionAsync(valuesSend))
+        .then(() => {
+          resetForm();
+        })
+        .finally(() => setIsLoading(false)); // End loading
     },
   });
 
@@ -209,12 +214,15 @@ export default function BookCourse() {
                           )}
                         </div>
                         <div className="col-12">
-                          <button
-                            type="submit"
-                            className="btn btn-primary w-100 py-2 px-5 text-white font-weight-bold"
-                          >
-                            Tư Vấn
-                          </button>
+                          <Spin spinning={isLoading}>
+                            <button
+                              type="submit"
+                              className="btn btn-primary w-100 py-2 px-5 text-white font-weight-bold"
+                              disabled={isLoading}
+                            >
+                              Tư Vấn
+                            </button>
+                          </Spin>
                         </div>
                       </div>
                     </form>
