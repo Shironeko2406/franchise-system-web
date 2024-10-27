@@ -3,8 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { httpClient } from "../../Utils/Interceptor";
 import { message } from "antd";
 
+const initialState = {
+};
+
 const RegisterCourseReducer = createSlice({
     name: 'RegisterCourseReducer',
+    initialState
 });
 
 export default RegisterCourseReducer.reducer;
