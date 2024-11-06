@@ -25,7 +25,6 @@ const HomePage = () => {
       <Course/>
       {/* <Achievement/> */}
       <Post/>
-      <TeamMember/>
       <TopFeedback/>
     </>
   );
