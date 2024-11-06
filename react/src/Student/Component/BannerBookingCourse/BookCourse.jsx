@@ -44,7 +44,7 @@ export default function BookCourse() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useDispatch();
   const { agencyData } = useSelector((state) => state.AgencyReducer);
-  const { course } = useSelector((state) => state.CourseReducer);
+  const { courseAvailable } = useSelector((state) => state.CourseReducer);
   const [isLoading, setIsLoading] = useState(false); // Loading state
 
   useEffect(() => {
@@ -203,7 +203,7 @@ export default function BookCourse() {
                             value={formBookCourse.values.course}
                           >
                             <option value="">Chọn khóa học bạn muốn tư vấn</option>
-                            {course.map((courseItem) => (
+                            {courseAvailable.map((courseItem) => (
                               <option key={courseItem.id} value={courseItem.id}>
                                 {courseItem.name}
                               </option>

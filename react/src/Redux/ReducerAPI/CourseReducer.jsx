@@ -4,6 +4,7 @@ import { message } from "antd";
 
 const initialState = {
   course: [],
+  courseAvailable: [],
   totalPagesCount: 0,
 };
 
@@ -15,10 +16,13 @@ const CourseReducer = createSlice({
       state.course = action.payload.items;
       state.totalPagesCount = action.payload.totalPagesCount;
     },
+    setCourseAvailable: (state, action)=>{
+      state.courseAvailable = action.payload
+    }
   },
 });
 
-export const { setCourse } = CourseReducer.actions;
+export const { setCourse, setCourseAvailable } = CourseReducer.actions;
 
 export default CourseReducer.reducer;
 //---------API CALL-------------
@@ -44,7 +48,7 @@ export const GetAllCoursesAvailableActionAsync = () => {
       const response = await httpClient.get(`api/v1/courses/available`);
       console.log("response", response);
       if (response.isSuccess) {
-        dispatch(setCourse({ items: response.data }))
+        dispatch(setCourseAvailable(response.data))
       } else {
         throw new Error(response.message)
       }

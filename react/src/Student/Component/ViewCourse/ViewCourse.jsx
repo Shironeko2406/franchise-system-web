@@ -96,7 +96,7 @@ const ViewCourse = () => {
                   </div>
                 </div>
                 <div className="text-center p-4 pb-0">
-                  <h3 className="mb-0">{course.price}</h3>
+                  <h3 className="mb-0">{course.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</h3>
                   <div className="mb-3">
                     <small className="fa fa-star text-primary" />
                     <small className="fa fa-star text-primary" />
