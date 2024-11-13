@@ -29,9 +29,9 @@ const ViewCourse = () => {
       <div className="container">
         <div className="text-center">
           <h6 className="section-title bg-white text-center text-primary px-3">
-            Courses
+            Khóa học
           </h6>
-          <h1 className="mb-4">Popular Courses</h1>
+          <h1 className="mb-4">Khóa Học Đang Mở</h1>
         </div>
 
         {/* Tabs navigation */}
