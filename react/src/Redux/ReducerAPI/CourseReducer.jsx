@@ -32,6 +32,7 @@ export const GetCourseActionAsync = (courseCategoryId) => {
       const res = await httpClient.get(`/api/v1/courses`, {
         params: {
           //thêm các param cần thiết
+          Status: "AvailableForFranchise",
           CourseCategoryId: courseCategoryId
         },
       });

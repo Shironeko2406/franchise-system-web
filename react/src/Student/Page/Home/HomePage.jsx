@@ -21,10 +21,10 @@ const HomePage = () => {
       <ViewCourse/>
       <AboutUs/>
       <OurService/>
-      <PackagesTicket/>
+      {/* <PackagesTicket/> */}
       <Course/>
       {/* <Achievement/> */}
-      <Post/>
+      {/* <Post/> */}
       <TopFeedback/>
     </>
   );

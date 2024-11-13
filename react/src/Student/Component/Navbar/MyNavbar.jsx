@@ -56,22 +56,6 @@ const MyNavbar = () => {
               </a>
             ))}
 
-            <div className="nav-item dropdown">
-              <a
-                href="#"
-                className="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
-                Pages
-              </a>
-              <div className="dropdown-menu m-0">
-                {dropdownLinks.map((item, index) => (
-                  <a key={index} href={item.href} className="dropdown-item">
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
           <div className="team-icon d-none d-xl-flex justify-content-center me-3">
             {socialLinks.map((social, index) => (
@@ -84,12 +68,12 @@ const MyNavbar = () => {
               </a>
             ))}
           </div>
-          <a
+          {/* <a
             href="#"
             className="btn btn-primary rounded-pill py-2 px-4 flex-shrink-0"
           >
             Get Started
-          </a>
+          </a> */}
         </div>
       </nav>
     </div>

@@ -14,8 +14,6 @@ const carouselData = [
     imgSrc: "/img/carousel-1.jpg",
     title: "Chào mừng học viên",
     heading: "Tham gia học ngay",
-    description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy...",
     formType: "register",
   },
 ];
@@ -110,7 +108,6 @@ export default function BookCourse() {
                     <h1 className="display-4 text-uppercase text-white mb-4">
                       {item.heading}
                     </h1>
-                    <p className="mb-4 fs-5">{item.description}</p>
                   </div>
                 </div>
 

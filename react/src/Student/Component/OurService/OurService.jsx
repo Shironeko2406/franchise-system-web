@@ -5,44 +5,41 @@ const OurService = () => {
     {
       icon: "fa fa-code fa-4x",
       title: "Code",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet vel beatae numquam.",
+      description: "Tạo nên các giải pháp kỹ thuật độc đáo và hiệu quả.",
       delay: "0.2s",
     },
     {
       icon: "fas fa-utensils fa-4x",
       title: "Eat",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet vel beatae numquam.",
+      description: "Thưởng thức ẩm thực phong phú, bổ dưỡng.",
       delay: "0.4s",
     },
     {
       icon: "fa fa-gamepad fa-4x",
       title: "Game",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet vel beatae numquam.",
+      description: "Trải nghiệm thế giới giải trí sống động và vui nhộn.",
       delay: "0.6s",
     },
     {
       icon: "fas fa-bed fa-4x",
       title: "Sleep",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet vel beatae numquam.",
+      description: "Thư giãn và phục hồi năng lượng mỗi ngày.",
       delay: "0.8s",
     },
-  ];
+];
+
 
   const operatingHours = [
     {
-      day: "Monday - Friday",
+      day: "Thứ hai - Thứ sáu",
       time: "11:00 AM - 16:00 PM",
     },
     {
-      day: "Saturday - Sunday",
+      day: "Thứ bảy - Chủ nhật",
       time: "09:00 AM - 17:00 PM",
     },
     {
-      day: "Holiday",
+      day: "Ngày lễ",
       time: "09:00 AM - 17:00 PM",
     },
   ];

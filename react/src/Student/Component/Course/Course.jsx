@@ -53,10 +53,7 @@ const Course = () => {
             Thực Chiến Phù Hợp Với Yêu Cầu Doanh Nghiệp
           </h1>
           <p className="text-white mb-0">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur
-            adipisci facilis cupiditate recusandae aperiam temporibus corporis
-            itaque quis facere, numquam, ad culpa deserunt sint dolorem autem
-            obcaecati, ipsam mollitia hic.
+            Khóa học được thiết kế thực tế, bám sát yêu cầu tuyển dụng của doanh nghiệp, giúp học viên phát triển kỹ năng chuyên môn và sẵn sàng tham gia vào thị trường lao động ngay sau khi hoàn thành.
           </p>
         </div>
 
