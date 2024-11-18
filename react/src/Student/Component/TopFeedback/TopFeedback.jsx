@@ -15,25 +15,25 @@ const settings = {
 const testimonials = [
   {
     id: 1,
-    quote: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos mollitia fugiat, nihil autem reprehenderit aperiam maxime minima consequatur, nam iste eius velit perferendis voluptatem at atque neque soluta reiciendis doloremque.",
-    name: "Person Name 1",
-    profession: "Profession 1",
+    quote: "Khóa học rất bổ ích và thú vị. Tôi đã học được rất nhiều kiến thức mới.",
+    name: "Nguyễn Văn An",
+    profession: "Sinh viên",
     imageSrc: "/img/testimonial-1.jpg",
     stars: 5
   },
   {
     id: 2,
-    quote: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos mollitia fugiat, nihil autem reprehenderit aperiam maxime minima consequatur, nam iste eius velit perferendis voluptatem at atque neque soluta reiciendis doloremque.",
-    name: "Person Name 2",
-    profession: "Profession 2",
+    quote: "Giảng viên nhiệt tình và nội dung khóa học rất dễ hiểu.",
+    name: "Trần Thị Bình",
+    profession: "Nhân viên văn phòng",
     imageSrc: "/img/testimonial-2.jpg",
     stars: 4
   },
   {
     id: 3,
-    quote: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos mollitia fugiat, nihil autem reprehenderit aperiam maxime minima consequatur, nam iste eius velit perferendis voluptatem at atque neque soluta reiciendis doloremque.",
-    name: "Person Name 3",
-    profession: "Profession 3",
+    quote: "Tôi rất hài lòng với khóa học này. Sẽ giới thiệu cho bạn bè.",
+    name: "Lê Văn Cát",
+    profession: "Sinh viên",
     imageSrc: "/img/testimonial-3.jpg",
     stars: 5
   }
@@ -48,13 +48,11 @@ const TopFeedback = () => {
           data-wow-delay="0.2s"
           style={{ maxWidth: 800 }}
         >
-          <h4 className="text-primary">Testimonials</h4>
-          <h1 className="display-5 text-white mb-4">Our Clients Reviews</h1>
+          <h4 className="text-primary">Đánh giá</h4>
+          <h1 className="display-5 text-white mb-4">Phản hồi về khóa học của các học viên</h1>
           <p className="text-white mb-0">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur
-            adipisci facilis cupiditate recusandae aperiam temporibus corporis
-            itaque quis facere, numquam, ad culpa deserunt sint dolorem autem
-            obcaecati, ipsam mollitia hic.
+            Chúng tôi rất tự hào về những phản hồi tích cực từ các học viên. Những đánh giá này
+            giúp chúng tôi không ngừng cải thiện và mang lại những khóa học tốt nhất.
           </p>
         </div>
 

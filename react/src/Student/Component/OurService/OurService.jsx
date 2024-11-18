@@ -9,24 +9,24 @@ const OurService = () => {
       delay: "0.2s",
     },
     {
+      icon: "fa fa-users fa-4x",
+      title: "Giảng viên",
+      description: "Đội ngũ giảng viên với nhiều năm kinh nghiệm giảng dạy và làm việc tại các công ty lớn.",
+      delay: "0.8s",
+    },
+    {
       icon: "fas fa-utensils fa-4x",
-      title: "Eat",
-      description: "Thưởng thức ẩm thực phong phú, bổ dưỡng.",
+      title: "Ăn uống",
+      description: "Ăn uống nhẹ trong các buổi học và giải lao.",
       delay: "0.4s",
     },
     {
       icon: "fa fa-gamepad fa-4x",
-      title: "Game",
-      description: "Trải nghiệm thế giới giải trí sống động và vui nhộn.",
+      title: "Trò chơi",
+      description: "Cung cấp các trò chơi cờ bàn cho học viên giải trí.",
       delay: "0.6s",
-    },
-    {
-      icon: "fas fa-bed fa-4x",
-      title: "Sleep",
-      description: "Thư giãn và phục hồi năng lượng mỗi ngày.",
-      delay: "0.8s",
-    },
-];
+    }
+  ];
 
 
   const operatingHours = [
@@ -57,10 +57,10 @@ const OurService = () => {
             Đào Tạo Chuyên Gia Lập Trình
           </h1>
           <p className="mb-0 text-white">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur
-            adipisci facilis cupiditate recusandae aperiam temporibus corporis
-            itaque quis facere, numquam, ad culpa deserunt sint dolorem autem
-            obcaecati, ipsam mollitia hic.
+            Chúng tôi cung cấp các khóa học chuyên sâu về lập trình, giúp bạn trở
+            thành chuyên gia trong lĩnh vực công nghệ thông tin. Với đội ngũ giảng viên
+            giàu kinh nghiệm và phương pháp giảng dạy hiện đại, bạn sẽ được trang bị
+            đầy đủ kiến thức và kỹ năng để phát triển sự nghiệp.
           </p>
         </div>
         <div className="row g-4">
@@ -73,11 +73,10 @@ const OurService = () => {
               {operatingHours.map((hour, index) => (
                 <div
                   key={index}
-                  className={`py-2 ${
-                    index === 0
-                      ? "border-bottom border-top"
-                      : "border-bottom"
-                  } d-flex align-items-center justify-content-between flex-wrap`}
+                  className={`py-2 ${index === 0
+                    ? "border-bottom border-top"
+                    : "border-bottom"
+                    } d-flex align-items-center justify-content-between flex-wrap`}
                 >
                   <h4 className="mb-0">{hour.day}</h4>
                   <p className="mb-0">

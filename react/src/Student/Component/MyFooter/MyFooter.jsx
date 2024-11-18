@@ -129,8 +129,8 @@ const MyFooter = () => {
             <div className="footer-item">
               <a href="index.html" className="p-0">
                 <h4 className="text-white mb-4">
-                  <i className="fas fa-swimmer text-primary me-3" />
-                  WaterLand
+                  <i className="fab fa-hubspot text-primary me-3" />
+                  FutureTech
                 </h4>
                 {/* <img src="img/logo.png" alt="Logo"> */}
               </a>

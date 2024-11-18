@@ -6,9 +6,9 @@ import { Outlet } from 'react-router-dom'
 const TempUIUser = () => {
   return (
     <>
-    <MyNavbar></MyNavbar>
-    <Outlet></Outlet>
-    <MyFooter></MyFooter>
+      <MyNavbar></MyNavbar>
+      <Outlet></Outlet>
+      {/* <MyFooter></MyFooter> */}
     </>
   )
 }

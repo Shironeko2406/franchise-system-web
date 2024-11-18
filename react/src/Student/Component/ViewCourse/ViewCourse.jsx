@@ -45,20 +45,18 @@ const ViewCourse = () => {
         >
           <li className="nav-item">
             <button
-              className={`nav-link ${
-                courseCategoryId === null ? "active" : ""
-              }`}
+              className={`nav-link ${courseCategoryId === null ? "active" : ""
+                }`}
               onClick={() => handleTabClick(null)}
             >
-              All Courses
+              Tất cả khóa học
             </button>
           </li>
           {courseCategory.map((category) => (
             <li className="nav-item" key={category.id}>
               <button
-                className={`nav-link ${
-                  courseCategoryId === category.id ? "active" : ""
-                }`}
+                className={`nav-link ${courseCategoryId === category.id ? "active" : ""
+                  }`}
                 onClick={() => handleTabClick(category.id)}
               >
                 {category.name}
