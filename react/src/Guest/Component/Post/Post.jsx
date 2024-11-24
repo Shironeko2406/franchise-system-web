@@ -30,7 +30,7 @@ const blogPosts = [
 const Post = () => {
   return (
     <div className="container-fluid blog pb-5">
-      <div className="container pb-5">
+      <div className="container">
         <div
           className="text-center mx-auto pb-5 wow fadeInUp"
           data-wow-delay="0.2s"
@@ -38,12 +38,6 @@ const Post = () => {
         >
           <h4 className="text-primary">Bài Viết</h4>
           <h1 className="display-5 mb-4">Nhanh &amp; Mới Nhất</h1>
-          <p className="mb-0">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur
-            adipisci facilis cupiditate recusandae aperiam temporibus corporis
-            itaque quis facere, numquam, ad culpa deserunt sint dolorem autem
-            obcaecati, ipsam mollitia hic.
-          </p>
         </div>
         <div className="row g-4">
           {blogPosts.map((post, index) => (

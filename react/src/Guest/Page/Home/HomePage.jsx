@@ -24,7 +24,7 @@ const HomePage = () => {
       {/* <PackagesTicket/> */}
       <Course/>
       {/* <Achievement/> */}
-      {/* <Post/> */}
+      <Post/>
       <TopFeedback/>
     </>
   );

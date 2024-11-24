@@ -3,11 +3,11 @@ import { NavLink } from "react-router-dom";
 
 const MyNavbar = () => {
   const navLinks = [
-    { name: "Trang Chủ", href: "index.html", active: true },
-    { name: "Thông Tin", href: "about.html" },
-    { name: "Dịch Vụ", href: "service.html" },
-    { name: "Bài Đăng", href: "blog.html" },
-    { name: "Liên Hệ", href: "contact.html" }
+    { name: "Trang Chủ", path: "/", active: true },
+    { name: "Thông Tin", path: "#" },
+    { name: "Dịch Vụ", path: "#" },
+    { name: "Nhượng quyền", path: "/for-franchise" },
+    { name: "Liên Hệ", path: "#" }
   ];
 
   const dropdownLinks = [
@@ -47,13 +47,13 @@ const MyNavbar = () => {
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav mx-auto py-0">
             {navLinks.map((link, index) => (
-              <a
+              <NavLink
                 key={index}
-                href={link.href}
+                to={link.path}
                 className={`nav-item nav-link ${link.active ? "active" : ""}`}
               >
                 {link.name}
-              </a>
+              </NavLink>
             ))}
 
           </div>
