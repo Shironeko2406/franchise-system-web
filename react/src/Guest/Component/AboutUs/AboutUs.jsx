@@ -41,7 +41,7 @@ const counters = [
 
 const AboutUs = () => {
   return (
-    <div className="container-fluid about pb-5">
+    <div className="container-fluid about pb-5 mt-5">
       <div className="container pb-5">
         <div className="row g-5">
           <div className="col-xl-6 wow fadeInUp" data-wow-delay="0.2s">
