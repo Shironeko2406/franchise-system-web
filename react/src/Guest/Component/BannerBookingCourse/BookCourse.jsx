@@ -31,36 +31,47 @@ const validationSchema = Yup.object({
     .matches(/^0[0-9]+$/, "Số điện thoại phải bắt đầu bằng số 0")
     .min(10, 'Số điện thoại phải có ít nhất 10 chữ số')
     .max(11, 'Số điện thoại không được vượt quá 11 chữ số'),
+  city: Yup.string()
+    .required('Vui lòng chọn tỉnh/thành phố'),
   agency: Yup.string()
-    .required('Vui lòng chọn địa chỉ chi nhánh'),
+    .required('Vui lòng chọn chi nhánh'),
   course: Yup.string()
     .required('Vui lòng chọn khóa học bạn muốn tư vấn'),
 });
-
 
 export default function BookCourse() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useDispatch();
   const { agencyData } = useSelector((state) => state.AgencyReducer);
   const { courseAvailable } = useSelector((state) => state.CourseReducer);
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+  const [cities, setCities] = useState([]);
+  const [filteredAgencies, setFilteredAgencies] = useState([]);
 
   useEffect(() => {
     dispatch(GetAgencyAddressesActionAsync());
     dispatch(GetAllCoursesAvailableActionAsync());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (agencyData.length > 0) {
+      const uniqueCities = [...new Set(agencyData.map(agency => agency.city))];
+      setCities(uniqueCities);
+    }
+  }, [agencyData]);
+
   const formBookCourse = useFormik({
     initialValues: {
       name: "",
       email: "",
       phone: "",
+      city: "",
       agency: "",
       course: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      setIsLoading(true); // Set loading state to true
+      setIsLoading(true);
       const formattedDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
       const valuesSend = {
         studentName: values.name,
@@ -75,7 +86,7 @@ export default function BookCourse() {
         .then(() => {
           resetForm();
         })
-        .finally(() => setIsLoading(false)); // End loading
+        .finally(() => setIsLoading(false));
     },
   });
 
@@ -83,6 +94,20 @@ export default function BookCourse() {
     const value = e.target.value.replace(/\D/g, '');
     formBookCourse.setFieldValue('phone', value);
   };
+
+  const handleCityChange = (e) => {
+    const selectedCity = e.target.value;
+    formBookCourse.setFieldValue('city', selectedCity);
+    formBookCourse.setFieldValue('agency', '');
+
+    if (selectedCity) {
+      const agencies = agencyData.filter(agency => agency.city === selectedCity);
+      setFilteredAgencies(agencies);
+    } else {
+      setFilteredAgencies([]);
+    }
+  };
+
   return (
     <Carousel
       activeIndex={currentIndex}
@@ -121,8 +146,7 @@ export default function BookCourse() {
                         <div className="col-12">
                           <input
                             type="text"
-                            className={`form-control border-0 py-2 bg-light ${formBookCourse.touched.name && formBookCourse.errors.name ? 'is-invalid' : ''
-                              }`}
+                            className={`form-control border-0 py-2 bg-light ${formBookCourse.touched.name && formBookCourse.errors.name ? 'is-invalid' : ''}`}
                             id="name"
                             name="name"
                             placeholder="Tên của bạn"
@@ -137,8 +161,7 @@ export default function BookCourse() {
                         <div className="col-12 col-xl-6">
                           <input
                             type="email"
-                            className={`form-control border-0 py-2 bg-light ${formBookCourse.touched.email && formBookCourse.errors.email ? 'is-invalid' : ''
-                              }`}
+                            className={`form-control border-0 py-2 bg-light ${formBookCourse.touched.email && formBookCourse.errors.email ? 'is-invalid' : ''}`}
                             id="email"
                             name="email"
                             placeholder="Địa chỉ email của bạn"
@@ -153,8 +176,7 @@ export default function BookCourse() {
                         <div className="col-12 col-xl-6">
                           <input
                             type="tel"
-                            className={`form-control border-0 py-2 bg-light ${formBookCourse.touched.phone && formBookCourse.errors.phone ? 'is-invalid' : ''
-                              }`}
+                            className={`form-control border-0 py-2 bg-light ${formBookCourse.touched.phone && formBookCourse.errors.phone ? 'is-invalid' : ''}`}
                             id="phone"
                             name="phone"
                             placeholder="Số điện thoại"
@@ -168,31 +190,7 @@ export default function BookCourse() {
                         </div>
                         <div className="col-12">
                           <select
-                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.agency && formBookCourse.errors.agency ? 'is-invalid' : ''
-                              }`}
-                            aria-label="Default select example"
-                            id="agency"
-                            name="agency"
-                            onChange={formBookCourse.handleChange}
-                            onBlur={formBookCourse.handleBlur}
-                            value={formBookCourse.values.agency}
-                          >
-                            <option value="">Chọn chi nhánh bạn muốn học</option>
-                            {agencyData.map((agency) => (
-                              <option key={agency.id} value={agency.id}>
-                                {agency.fullAddress}
-                              </option>
-                            ))}
-                          </select>
-                          {formBookCourse.touched.agency && formBookCourse.errors.agency && (
-                            <div className="invalid-feedback text-danger">{formBookCourse.errors.agency}</div>
-                          )}
-                        </div>
-                        <div className="col-12">
-                          <select
-                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.course && formBookCourse.errors.course ? 'is-invalid' : ''
-                              }`}
-                            aria-label="Default select example"
+                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.course && formBookCourse.errors.course ? 'is-invalid' : ''}`}
                             id="course"
                             name="course"
                             onChange={formBookCourse.handleChange}
@@ -208,6 +206,50 @@ export default function BookCourse() {
                           </select>
                           {formBookCourse.touched.course && formBookCourse.errors.course && (
                             <div className="invalid-feedback text-danger">{formBookCourse.errors.course}</div>
+                          )}
+                        </div>
+                        <div className="col-12">
+                          <h5 className="text-primary">Chọn Địa Chỉ Chi Nhánh Bạn Muốn Học</h5>
+                        </div>
+                        <div className="col-12">
+                          <select
+                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.city && formBookCourse.errors.city ? 'is-invalid' : ''}`}
+                            id="city"
+                            name="city"
+                            onChange={handleCityChange}
+                            onBlur={formBookCourse.handleBlur}
+                            value={formBookCourse.values.city}
+                          >
+                            <option value="">Bước 1: Chọn tỉnh/thành phố</option>
+                            {cities.map((city) => (
+                              <option key={city} value={city}>
+                                {city}
+                              </option>
+                            ))}
+                          </select>
+                          {formBookCourse.touched.city && formBookCourse.errors.city && (
+                            <div className="invalid-feedback text-danger">{formBookCourse.errors.city}</div>
+                          )}
+                        </div>
+                        <div className="col-12">
+                          <select
+                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.agency && formBookCourse.errors.agency ? 'is-invalid' : ''}`}
+                            id="agency"
+                            name="agency"
+                            onChange={formBookCourse.handleChange}
+                            onBlur={formBookCourse.handleBlur}
+                            value={formBookCourse.values.agency}
+                            disabled={!formBookCourse.values.city}
+                          >
+                            <option value="">Bước 2: Chọn chi nhánh</option>
+                            {filteredAgencies.map((agency) => (
+                              <option key={agency.id} value={agency.id}>
+                                {agency.fullAddress}
+                              </option>
+                            ))}
+                          </select>
+                          {formBookCourse.touched.agency && formBookCourse.errors.agency && (
+                            <div className="invalid-feedback text-danger">{formBookCourse.errors.agency}</div>
                           )}
                         </div>
                         <div className="col-12">
@@ -232,4 +274,5 @@ export default function BookCourse() {
       ))}
     </Carousel>
   );
-} 
+}
+
