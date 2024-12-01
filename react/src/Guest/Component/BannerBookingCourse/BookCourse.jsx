@@ -14,6 +14,7 @@ const carouselData = [
     imgSrc: "/img/carousel-1.jpg",
     title: "Chào mừng học viên",
     heading: "Tham gia học ngay",
+    text: "Chào mừng bạn đến với FutureTech – nơi khơi nguồn đam mê và phát triển kỹ năng công nghệ thông tin. Chúng tôi tự hào là trung tâm đào tạo hàng đầu trong lĩnh vực IT, cung cấp các khóa học chất lượng cao từ cơ bản đến nâng cao, phù hợp với mọi đối tượng từ học sinh, sinh viên đến các chuyên gia đang làm việc",
     formType: "register",
   },
 ];
@@ -108,6 +109,7 @@ export default function BookCourse() {
                     <h1 className="display-4 text-uppercase text-white mb-4">
                       {item.heading}
                     </h1>
+                    <p>{item.text}</p>
                   </div>
                 </div>
 
