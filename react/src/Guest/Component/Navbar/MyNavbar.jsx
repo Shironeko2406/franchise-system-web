@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 const MyNavbar = () => {
   const navLinks = [
     { name: "Trang Chủ", path: "/", active: true },
-    { name: "Thông Tin", path: "#" },
-    { name: "Dịch Vụ", path: "#" },
+    // { name: "Thông Tin", path: "#" },
+    // { name: "Dịch Vụ", path: "#" },
     { name: "Nhượng quyền", path: "/for-franchise" },
     { name: "Liên Hệ", path: "#" }
   ];
