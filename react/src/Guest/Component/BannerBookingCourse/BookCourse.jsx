@@ -78,7 +78,7 @@ const BookCourse = ({selectedCourseId}) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      // setIsLoading(true);
+      setIsLoading(true);
       const formattedDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
       const valuesSend = {
         studentName: values.name,
@@ -88,12 +88,11 @@ const BookCourse = ({selectedCourseId}) => {
         courseId: values.course,
         date: formattedDate
       };
-      console.log("Register Form:", values);
-      // dispatch(RegisterCourseActionAsync(valuesSend))
-      //   .then(() => {
-      //     resetForm();
-      //   })
-      //   .finally(() => setIsLoading(false));
+      dispatch(RegisterCourseActionAsync(valuesSend))
+        .then(() => {
+          resetForm();
+        })
+        .finally(() => setIsLoading(false));
     },
   });
 
