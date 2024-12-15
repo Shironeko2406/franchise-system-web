@@ -1,20 +1,23 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+
+const navLinks = [
+  { name: "Trang Chủ", path: "/", active: true },
+  { name: "Nhượng quyền", path: "/for-franchise" },
+  { name: "Liên Hệ", path: "#", scrollToFooter: true }, // Thêm trường scrollToFooter
+  { name: "Khóa học", path: "#", scrollToViewCourse: true } 
+];
+
+const socialLinks = [
+  { icon: "fab fa-facebook-f", href: "#" },
+  { icon: "fab fa-twitter", href: "#" },
+  { icon: "fab fa-instagram", href: "#" },
+  { icon: "fab fa-linkedin-in", href: "#" }
+];
 
 const MyNavbar = ({ footerRef, viewCourseRef }) => {
-  const navLinks = [
-    { name: "Trang Chủ", path: "/", active: true },
-    { name: "Nhượng quyền", path: "/for-franchise" },
-    { name: "Liên Hệ", path: "#", scrollToFooter: true }, // Thêm trường scrollToFooter
-    { name: "Khóa học", path: "#", scrollToViewCourse: true } 
-  ];
-
-  const socialLinks = [
-    { icon: "fab fa-facebook-f", href: "#" },
-    { icon: "fab fa-twitter", href: "#" },
-    { icon: "fab fa-instagram", href: "#" },
-    { icon: "fab fa-linkedin-in", href: "#" }
-  ];
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Hàm cuộn xuống footer khi click vào "Liên Hệ"
   const handleScrollToFooter = (e) => {
@@ -26,7 +29,14 @@ const MyNavbar = ({ footerRef, viewCourseRef }) => {
 
   const handleScrollToViewCourse = (e) => {
     e.preventDefault();
-    if (viewCourseRef && viewCourseRef.current) {
+    if (location.pathname !== "/") {
+      navigate("/"); // Điều hướng về trang gốc
+      setTimeout(() => {
+        if (viewCourseRef && viewCourseRef.current) {
+          viewCourseRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100); // Đợi một khoảng thời gian ngắn để đảm bảo DOM được render
+    } else if (viewCourseRef && viewCourseRef.current) {
       viewCourseRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
