@@ -10,8 +10,8 @@ const OurService = () => {
     },
     {
       icon: "fas fa-utensils fa-4x",
-      title: "Chuyên nghiệp",
-      description: "Thưởng thức ẩm thực phong phú, bổ dưỡng.",
+      title: "Ăn uống",
+      description: "Tái tạo năng lượng và cảm hứng.",
       delay: "0.4s",
     },
     {

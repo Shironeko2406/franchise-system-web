@@ -4,7 +4,7 @@ import { GetCourseCategoryActionAsync } from "../../../Redux/ReducerAPI/CourseCa
 import { GetCourseActionAsync } from "../../../Redux/ReducerAPI/CourseReducer";
 import { Spin, Popover } from "antd";
 
-const ViewCourse = () => {
+const ViewCourse = ({ onRegisterNow }) => {
   const { courseCategory } = useSelector(
     (state) => state.CourseCategoryReducer
   );
@@ -82,9 +82,9 @@ const ViewCourse = () => {
                       </div>
                     </div>
                     <div className="course-buttons">
-                      <a href="#" className="course-button btn btn-primary">
+                      <button className="course-button btn btn-primary" onClick={() => onRegisterNow(course.id)}>
                         Đăng ký ngay
-                      </a>
+                      </button>
                       <Popover 
                         content={
                           <div className="course-description">

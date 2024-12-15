@@ -40,7 +40,7 @@ const validationSchema = Yup.object({
     .required('Vui lòng chọn khóa học bạn muốn tư vấn'),
 });
 
-export default function BookCourse() {
+const BookCourse = ({selectedCourseId}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useDispatch();
   const { agencyData } = useSelector((state) => state.AgencyReducer);
@@ -61,6 +61,12 @@ export default function BookCourse() {
     }
   }, [agencyData]);
 
+  useEffect(() => {
+    if (selectedCourseId) {
+      formBookCourse.setFieldValue("course", selectedCourseId);
+    }
+  }, [selectedCourseId]);
+
   const formBookCourse = useFormik({
     initialValues: {
       name: "",
@@ -68,11 +74,11 @@ export default function BookCourse() {
       phone: "",
       city: "",
       agency: "",
-      course: "",
+      course: selectedCourseId || "",
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      setIsLoading(true);
+      // setIsLoading(true);
       const formattedDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
       const valuesSend = {
         studentName: values.name,
@@ -82,12 +88,12 @@ export default function BookCourse() {
         courseId: values.course,
         date: formattedDate
       };
-      console.log("Register Form:", valuesSend);
-      dispatch(RegisterCourseActionAsync(valuesSend))
-        .then(() => {
-          resetForm();
-        })
-        .finally(() => setIsLoading(false));
+      console.log("Register Form:", values);
+      // dispatch(RegisterCourseActionAsync(valuesSend))
+      //   .then(() => {
+      //     resetForm();
+      //   })
+      //   .finally(() => setIsLoading(false));
     },
   });
 
@@ -278,3 +284,4 @@ export default function BookCourse() {
   );
 }
 
+export default BookCourse

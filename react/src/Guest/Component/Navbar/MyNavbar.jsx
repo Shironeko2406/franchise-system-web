@@ -1,13 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const MyNavbar = () => {
+const MyNavbar = ({ footerRef }) => {
   const navLinks = [
     { name: "Trang Chủ", path: "/", active: true },
-    // { name: "Thông Tin", path: "#" },
-    // { name: "Dịch Vụ", path: "#" },
     { name: "Nhượng quyền", path: "/for-franchise" },
-    { name: "Liên Hệ", path: "#" }
+    { name: "Liên Hệ", path: "#", scrollToFooter: true } // Thêm trường scrollToFooter
   ];
 
   const dropdownLinks = [
@@ -26,6 +24,14 @@ const MyNavbar = () => {
     { icon: "fab fa-instagram", href: "#" },
     { icon: "fab fa-linkedin-in", href: "#" }
   ];
+
+  // Hàm cuộn xuống footer khi click vào "Liên Hệ"
+  const handleScrollToFooter = (e) => {
+    e.preventDefault();  // Ngừng hành động mặc định của NavLink (chuyển hướng)
+    if (footerRef && footerRef.current) {
+      footerRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="container-fluid nav-bar sticky-top px-4 py-2 py-lg-0">
@@ -47,15 +53,25 @@ const MyNavbar = () => {
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav mx-auto py-0">
             {navLinks.map((link, index) => (
-              <NavLink
-                key={index}
-                to={link.path}
-                className={`nav-item nav-link ${link.active ? "active" : ""}`}
-              >
-                {link.name}
-              </NavLink>
+              link.scrollToFooter ? (
+                <a
+                  key={index}
+                  href={link.path}
+                  className="nav-item nav-link"
+                  onClick={handleScrollToFooter} // Gọi hàm cuộn khi click
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <NavLink
+                  key={index}
+                  to={link.path}
+                  className={`nav-item nav-link ${link.active ? "active" : ""}`}
+                >
+                  {link.name}
+                </NavLink>
+              )
             ))}
-
           </div>
           <div className="team-icon d-none d-xl-flex justify-content-center me-3">
             {socialLinks.map((social, index) => (
@@ -68,12 +84,6 @@ const MyNavbar = () => {
               </a>
             ))}
           </div>
-          {/* <a
-            href="#"
-            className="btn btn-primary rounded-pill py-2 px-4 flex-shrink-0"
-          >
-            Get Started
-          </a> */}
         </div>
       </nav>
     </div>
