@@ -1,21 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const MyNavbar = ({ footerRef }) => {
+const MyNavbar = ({ footerRef, viewCourseRef }) => {
   const navLinks = [
     { name: "Trang Chủ", path: "/", active: true },
     { name: "Nhượng quyền", path: "/for-franchise" },
-    { name: "Liên Hệ", path: "#", scrollToFooter: true } // Thêm trường scrollToFooter
-  ];
-
-  const dropdownLinks = [
-    { name: "Our Feature", href: "feature.html" },
-    { name: "Our Gallery", href: "gallery.html" },
-    { name: "Attractions", href: "attraction.html" },
-    { name: "Ticket Packages", href: "package.html" },
-    { name: "Our Team", href: "team.html" },
-    { name: "Testimonial", href: "testimonial.html" },
-    { name: "404 Page", href: "404.html" }
+    { name: "Liên Hệ", path: "#", scrollToFooter: true }, // Thêm trường scrollToFooter
+    { name: "Khóa học", path: "#", scrollToViewCourse: true } 
   ];
 
   const socialLinks = [
@@ -30,6 +21,13 @@ const MyNavbar = ({ footerRef }) => {
     e.preventDefault();  // Ngừng hành động mặc định của NavLink (chuyển hướng)
     if (footerRef && footerRef.current) {
       footerRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollToViewCourse = (e) => {
+    e.preventDefault();
+    if (viewCourseRef && viewCourseRef.current) {
+      viewCourseRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -52,13 +50,22 @@ const MyNavbar = ({ footerRef }) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav mx-auto py-0">
-            {navLinks.map((link, index) => (
+            {navLinks.map((link, index) =>
               link.scrollToFooter ? (
                 <a
                   key={index}
                   href={link.path}
                   className="nav-item nav-link"
-                  onClick={handleScrollToFooter} // Gọi hàm cuộn khi click
+                  onClick={handleScrollToFooter} // Gọi hàm cuộn khi click vào "Liên hệ"
+                >
+                  {link.name}
+                </a>
+              ) : link.scrollToViewCourse ? (
+                <a
+                  key={index}
+                  href={link.path}
+                  className="nav-item nav-link"
+                  onClick={handleScrollToViewCourse} // Gọi hàm cuộn khi click vào "Khóa học"
                 >
                   {link.name}
                 </a>
@@ -71,7 +78,7 @@ const MyNavbar = ({ footerRef }) => {
                   {link.name}
                 </NavLink>
               )
-            ))}
+            )}
           </div>
           <div className="team-icon d-none d-xl-flex justify-content-center me-3">
             {socialLinks.map((social, index) => (
