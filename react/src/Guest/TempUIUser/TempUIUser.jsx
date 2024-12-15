@@ -1,16 +1,18 @@
-import React from 'react'
-import MyNavbar from '../Component/Navbar/MyNavbar'
-import MyFooter from '../Component/MyFooter/MyFooter'
-import { Outlet } from 'react-router-dom'
+import React, { useRef } from 'react';
+import MyNavbar from '../Component/Navbar/MyNavbar';
+import MyFooter from '../Component/MyFooter/MyFooter';
+import { Outlet } from 'react-router-dom';
 
 const TempUIUser = () => {
+  const footerRef = useRef(null);
+
   return (
     <>
-    <MyNavbar></MyNavbar>
-    <Outlet></Outlet>
-    <MyFooter></MyFooter>
+      <MyNavbar footerRef={footerRef} />
+      <Outlet />
+      <MyFooter ref={footerRef} />
     </>
-  )
-}
+  );
+};
 
-export default TempUIUser
+export default TempUIUser;
