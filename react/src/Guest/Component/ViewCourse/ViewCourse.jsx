@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetCourseCategoryActionAsync } from "../../../Redux/ReducerAPI/CourseCategoryReducer";
 import { GetCourseActionAsync } from "../../../Redux/ReducerAPI/CourseReducer";
 import { Spin, Popover } from "antd";
 
-const ViewCourse = ({ onRegisterNow }) => {
+const ViewCourse = forwardRef(({ onRegisterNow }, ref) => {
   const { courseCategory } = useSelector(
     (state) => state.CourseCategoryReducer
   );
@@ -27,7 +27,7 @@ const ViewCourse = ({ onRegisterNow }) => {
   };
 
   return (
-    <div className="container-xxl py-5">
+    <div className="container-xxl py-5" ref={ref}>
       <div className="container">
         <div className="text-center mb-5">
           <h6 className="section-title bg-white text-center text-primary px-3">
@@ -108,7 +108,7 @@ const ViewCourse = ({ onRegisterNow }) => {
       </div>
     </div>
   );
-};
+});
 
 export default ViewCourse;
 
