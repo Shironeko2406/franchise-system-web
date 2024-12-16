@@ -4,8 +4,8 @@ import { message } from "antd";
 const TOKEN_AUTHOR = "accessToken";
 const REFRESH_TOKEN = "refreshToken";
 const USER_LOGIN = "userLogin";
-const HOST_DOMAIN = "https://localhost:7116";
-//const HOST_DOMAIN = "https://futuretech-bza4b0chcrhyeva6.eastasia-01.azurewebsites.net";
+// const HOST_DOMAIN = "https://localhost:7116";
+const HOST_DOMAIN = "https://futuretech-bza4b0chcrhyeva6.eastasia-01.azurewebsites.net";
 
 // Cấu hình interceptors
 const httpClient = axios.create({
