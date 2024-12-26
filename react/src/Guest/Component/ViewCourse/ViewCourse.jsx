@@ -1,56 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetCourseCategoryActionAsync } from "../../../Redux/ReducerAPI/CourseCategoryReducer";
 import { GetCourseActionAsync } from "../../../Redux/ReducerAPI/CourseReducer";
+import { Spin, Popover } from "antd";
 
-const ViewCourse = () => {
+const ViewCourse = forwardRef(({ onRegisterNow }, ref) => {
   const { courseCategory } = useSelector(
     (state) => state.CourseCategoryReducer
   );
   const { course } = useSelector((state) => state.CourseReducer);
   const dispatch = useDispatch();
   const [courseCategoryId, setCourseCategoryId] = useState(null);
-  console.log(course)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(GetCourseCategoryActionAsync());
+    dispatch(GetCourseCategoryActionAsync()).then(() => setLoading(false));
   }, []);
 
   useEffect(() => {
-    dispatch(GetCourseActionAsync(courseCategoryId)); // Gọi API với courseCategoryId từ state
+    setLoading(true);
+    dispatch(GetCourseActionAsync(courseCategoryId)).then(() => setLoading(false));
   }, [courseCategoryId]);
 
   const handleTabClick = (categoryId) => {
-    setCourseCategoryId(categoryId); // Cập nhật courseCategoryId khi chọn category
+    setCourseCategoryId(categoryId);
   };
 
   return (
-    <div className="container-xxl py-5">
+    <div className="container-xxl py-5" ref={ref}>
       <div className="container">
-        <div className="text-center">
+        <div className="text-center mb-5">
           <h6 className="section-title bg-white text-center text-primary px-3">
             Khóa học
           </h6>
           <h1 className="mb-4">Khóa Học Đang Mở</h1>
         </div>
 
-        {/* Tabs navigation */}
-        <ul
-          className="nav nav-pills mb-3 justify-content-start w-100"
-          style={{
-            backgroundColor: "#f8f9fa",
-            borderRadius: "10px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          }}
-        >
+        <ul className="nav nav-pills mb-5 justify-content-center">
           <li className="nav-item">
             <button
-              className={`nav-link ${
-                courseCategoryId === null ? "active" : ""
-              }`}
+              className={`nav-link ${courseCategoryId === null ? "active" : ""}`}
               onClick={() => handleTabClick(null)}
             >
-              All Courses
+              Tất cả khóa học
             </button>
           </li>
           {courseCategory.map((category) => (
@@ -67,67 +59,57 @@ const ViewCourse = () => {
           ))}
         </ul>
 
-        {/* Tab content */}
-        <div className="row g-4">
-          {course.map((course) => (
-            <div className="col-lg-3 col-md-4" key={course.id}>
-              <div className="course-item bg-light">
-                <div className="position-relative overflow-hidden">
-                  <img
-                    className="img-fluid"
-                    src={course.urlImage}
-                    alt={course.name}
-                  />
-                  <div className="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-                    <a
-                      href="#"
-                      className="flex-shrink-0 btn btn-sm btn-primary px-3 border-end"
-                      style={{ borderRadius: "30px 0 0 30px" }}
-                    >
-                      Read More
-                    </a>
-                    <a
-                      href="#"
-                      className="flex-shrink-0 btn btn-sm btn-primary px-3"
-                      style={{ borderRadius: "0 30px 30px 0" }}
-                    >
-                      Join Now
-                    </a>
+        <Spin spinning={loading} tip="Đang tải...">
+          <div className="row g-4">
+            {course.map((course) => (
+              <div className="col-lg-3 col-md-6" key={course.id}>
+                <div className="course-item">
+                  <div className="position-relative overflow-hidden">
+                    <img
+                      className="img-fluid"
+                      src={course.urlImage}
+                      alt={course.name}
+                    />
                   </div>
-                </div>
-                <div className="text-center p-4 pb-0">
-                  <h3 className="mb-0">{course.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</h3>
-                  <div className="mb-3">
-                    <small className="fa fa-star text-primary" />
-                    <small className="fa fa-star text-primary" />
-                    <small className="fa fa-star text-primary" />
-                    <small className="fa fa-star text-primary" />
-                    <small className="fa fa-star text-primary" />
-                    <small>(100)</small>
+                  <div className="course-content">
+                    <div className="course-title">{course.name}</div>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                      <div className="course-price">
+                        {course.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                      </div>
+                      <div className="course-lessons">
+                        {course.numberOfLession} bài học
+                      </div>
+                    </div>
+                    <div className="course-buttons">
+                      <button className="course-button btn btn-primary" onClick={() => onRegisterNow(course.id)}>
+                        Đăng ký ngay
+                      </button>
+                      <Popover 
+                        content={
+                          <div className="course-description">
+                            {course.description}
+                          </div>
+                        } 
+                        title="Chi tiết khóa học" 
+                        trigger="click"
+                      >
+                        <button className="course-button course-button-secondary">
+                          Chi tiết
+                        </button>
+                      </Popover>
+                    </div>
                   </div>
-                  <h5 className="mb-4">{course.name}</h5>
-                </div>
-                <div className="d-flex border-top">
-                  <small className="flex-fill text-center border-end py-2">
-                    <i className="fa fa-user-tie text-primary me-2" />
-                    Hiếu
-                  </small>
-                  <small className="flex-fill text-center border-end py-2">
-                    <i className="fa fa-clock text-primary me-2" />
-                    {course.numberOfLession} Bài học
-                  </small>
-                  <small className="flex-fill text-center py-2">
-                    <i className="fa fa-user text-primary me-2" />
-                    60 Students
-                  </small>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Spin>
       </div>
     </div>
   );
-};
+});
 
 export default ViewCourse;
+
+

@@ -101,23 +101,6 @@ const RegisInfoConsultModal = ({ visible, onClose }) => {
         >
           <Input placeholder="Nhập email" />
         </Form.Item>
-
-        <Form.Item
-          name="agreement"
-          valuePropName="checked"
-          rules={[
-            {
-              validator: (_, value) =>
-                value
-                  ? Promise.resolve()
-                  : Promise.reject("Vui lòng đồng ý với điều khoản và dịch vụ"),
-            },
-          ]}
-        >
-          <Checkbox>
-            Tôi đồng ý với <a href="#">điều khoản và dịch vụ</a>
-          </Checkbox>
-        </Form.Item>
       </StyledForm>
     </StyledModal>
   );

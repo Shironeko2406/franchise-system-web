@@ -9,23 +9,23 @@ const OurService = () => {
       delay: "0.2s",
     },
     {
-      icon: "fas fa-utensils fa-4x",
-      title: "Eat",
-      description: "Thưởng thức ẩm thực phong phú, bổ dưỡng.",
+      icon: "fa fa-users fa-4x",
+      title: "Giảng viên",
+      description: "Đội ngũ giảng viên với nhiều năm kinh nghiệm giảng dạy và làm việc tại các công ty lớn.",
+      delay: "0.8s",
+    },
+    {
+      icon: "fa fa-desktop fa-4x",
+      title: "Vật chất",
+      description: "Cơ sở vật chất đào chuẩn quốc tế.",
       delay: "0.4s",
     },
     {
       icon: "fa fa-gamepad fa-4x",
-      title: "Game",
-      description: "Trải nghiệm thế giới giải trí sống động và vui nhộn.",
+      title: "Trải nghiệm",
+      description: "Trải nghiệm môi trường học sáng tạo chuyên nghiệp.",
       delay: "0.6s",
-    },
-    {
-      icon: "fas fa-bed fa-4x",
-      title: "Sleep",
-      description: "Thư giãn và phục hồi năng lượng mỗi ngày.",
-      delay: "0.8s",
-    },
+    }
 ];
 
 
@@ -57,10 +57,7 @@ const OurService = () => {
             Đào Tạo Chuyên Gia Lập Trình
           </h1>
           <p className="mb-0 text-white">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur
-            adipisci facilis cupiditate recusandae aperiam temporibus corporis
-            itaque quis facere, numquam, ad culpa deserunt sint dolorem autem
-            obcaecati, ipsam mollitia hic.
+          Với đội ngũ giảng viên giàu kinh nghiệm, chương trình học thực tiễn và cơ sở vật chất hiện đại, chúng tôi cam kết giúp bạn nắm vững kiến thức, rèn luyện kỹ năng và sẵn sàng ứng dụng vào thực tế.
           </p>
         </div>
         <div className="row g-4">

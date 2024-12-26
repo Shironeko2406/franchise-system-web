@@ -1,31 +1,45 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
-const MyNavbar = () => {
-  const navLinks = [
-    { name: "Trang Chủ", path: "/", active: true },
-    { name: "Thông Tin", path: "#" },
-    { name: "Dịch Vụ", path: "#" },
-    { name: "Nhượng quyền", path: "/for-franchise" },
-    { name: "Liên Hệ", path: "#" }
-  ];
+const navLinks = [
+  { name: "Trang Chủ", path: "/", active: true },
+  { name: "Nhượng quyền", path: "/for-franchise" },
+  { name: "Liên Hệ", path: "#", scrollToFooter: true }, // Thêm trường scrollToFooter
+  { name: "Khóa học", path: "#", scrollToViewCourse: true } 
+];
 
-  const dropdownLinks = [
-    { name: "Our Feature", href: "feature.html" },
-    { name: "Our Gallery", href: "gallery.html" },
-    { name: "Attractions", href: "attraction.html" },
-    { name: "Ticket Packages", href: "package.html" },
-    { name: "Our Team", href: "team.html" },
-    { name: "Testimonial", href: "testimonial.html" },
-    { name: "404 Page", href: "404.html" }
-  ];
+const socialLinks = [
+  { icon: "fab fa-facebook-f", href: "#" },
+  { icon: "fab fa-twitter", href: "#" },
+  { icon: "fab fa-instagram", href: "#" },
+  { icon: "fab fa-linkedin-in", href: "#" }
+];
 
-  const socialLinks = [
-    { icon: "fab fa-facebook-f", href: "#" },
-    { icon: "fab fa-twitter", href: "#" },
-    { icon: "fab fa-instagram", href: "#" },
-    { icon: "fab fa-linkedin-in", href: "#" }
-  ];
+const MyNavbar = ({ footerRef, viewCourseRef }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Hàm cuộn xuống footer khi click vào "Liên Hệ"
+  const handleScrollToFooter = (e) => {
+    e.preventDefault();  // Ngừng hành động mặc định của NavLink (chuyển hướng)
+    if (footerRef && footerRef.current) {
+      footerRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollToViewCourse = (e) => {
+    e.preventDefault();
+    if (location.pathname !== "/") {
+      navigate("/"); // Điều hướng về trang gốc
+      setTimeout(() => {
+        if (viewCourseRef && viewCourseRef.current) {
+          viewCourseRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100); // Đợi một khoảng thời gian ngắn để đảm bảo DOM được render
+    } else if (viewCourseRef && viewCourseRef.current) {
+      viewCourseRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="container-fluid nav-bar sticky-top px-4 py-2 py-lg-0">
@@ -46,16 +60,35 @@ const MyNavbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav mx-auto py-0">
-            {navLinks.map((link, index) => (
-              <NavLink
-                key={index}
-                to={link.path}
-                className={`nav-item nav-link ${link.active ? "active" : ""}`}
-              >
-                {link.name}
-              </NavLink>
-            ))}
-
+            {navLinks.map((link, index) =>
+              link.scrollToFooter ? (
+                <a
+                  key={index}
+                  href={link.path}
+                  className="nav-item nav-link"
+                  onClick={handleScrollToFooter} // Gọi hàm cuộn khi click vào "Liên hệ"
+                >
+                  {link.name}
+                </a>
+              ) : link.scrollToViewCourse ? (
+                <a
+                  key={index}
+                  href={link.path}
+                  className="nav-item nav-link"
+                  onClick={handleScrollToViewCourse} // Gọi hàm cuộn khi click vào "Khóa học"
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <NavLink
+                  key={index}
+                  to={link.path}
+                  className={`nav-item nav-link ${link.active ? "active" : ""}`}
+                >
+                  {link.name}
+                </NavLink>
+              )
+            )}
           </div>
           <div className="team-icon d-none d-xl-flex justify-content-center me-3">
             {socialLinks.map((social, index) => (
@@ -68,12 +101,6 @@ const MyNavbar = () => {
               </a>
             ))}
           </div>
-          {/* <a
-            href="#"
-            className="btn btn-primary rounded-pill py-2 px-4 flex-shrink-0"
-          >
-            Get Started
-          </a> */}
         </div>
       </nav>
     </div>
