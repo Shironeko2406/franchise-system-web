@@ -8,6 +8,7 @@ import { GetAgencyAddressesActionAsync } from "../../../Redux/ReducerAPI/AgencyR
 import { GetAllCoursesAvailableActionAsync } from "../../../Redux/ReducerAPI/CourseReducer";
 import { RegisterCourseActionAsync } from "../../../Redux/ReducerAPI/RegisterCourseReducer";
 import { Spin } from "antd";
+import { GetClassesActionAsync } from "../../../Redux/ReducerAPI/ClassReducer";
 
 const carouselData = [
   {
@@ -40,11 +41,37 @@ const validationSchema = Yup.object({
     .required('Vui lòng chọn khóa học bạn muốn tư vấn'),
 });
 
-const BookCourse = ({selectedCourseId}) => {
+const translateDayOfWeek = (dayOfWeekString) => {
+  const dayTranslation = {
+    Monday: "Thứ Hai",
+    Tuesday: "Thứ Ba",
+    Wednesday: "Thứ Tư",
+    Thursday: "Thứ Năm",
+    Friday: "Thứ Sáu",
+    Saturday: "Thứ Bảy",
+    Sunday: "Chủ Nhật",
+  };
+
+  const [days, startTime, endTime] = dayOfWeekString.split("-");
+
+  const translatedDays = days
+    .split(", ")
+    .map((day) => day.trim())
+    .map((day) => dayTranslation[day] || day)
+    .join(", ");
+
+  const formattedStartTime = startTime.slice(0, 5);
+  const formattedEndTime = endTime.slice(0, 5);
+
+  return `${translatedDays} - ${formattedStartTime} đến ${formattedEndTime}`;
+};
+
+const BookCourse = ({ selectedCourseId }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useDispatch();
   const { agencyData } = useSelector((state) => state.AgencyReducer);
   const { courseAvailable } = useSelector((state) => state.CourseReducer);
+  const { classData } = useSelector((state) => state.ClassReducer);
   const [isLoading, setIsLoading] = useState(false);
   const [cities, setCities] = useState([]);
   const [filteredAgencies, setFilteredAgencies] = useState([]);
@@ -75,24 +102,32 @@ const BookCourse = ({selectedCourseId}) => {
       city: "",
       agency: "",
       course: selectedCourseId || "",
+      class: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
       setIsLoading(true);
-      const formattedDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
       const valuesSend = {
         studentName: values.name,
         email: values.email,
         phoneNumber: values.phone,
         agencyId: values.agency,
         courseId: values.course,
-        date: formattedDate
+        classId: values.class,
       };
-      dispatch(RegisterCourseActionAsync(valuesSend))
-        .then(() => {
-          resetForm();
-        })
-        .finally(() => setIsLoading(false));
+      try {
+        const response = await dispatch(RegisterCourseActionAsync(valuesSend));
+        if (response.isSuccess && response.data) {
+          window.location.href = response.data;
+        } else {
+          console.error("Registration failed:", response.message);
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+      } finally {
+        setIsLoading(false);
+        resetForm();
+      }
     },
   });
 
@@ -105,10 +140,26 @@ const BookCourse = ({selectedCourseId}) => {
     const selectedCity = e.target.value;
     formBookCourse.setFieldValue('city', selectedCity);
     formBookCourse.setFieldValue('agency', '');
+    formBookCourse.setFieldValue('class', '');
 
     if (selectedCity) {
       const agencies = agencyData.filter(agency => agency.city === selectedCity);
       setFilteredAgencies(agencies);
+    } else {
+      setFilteredAgencies([]);
+    }
+  };
+
+  const handleAgencyChange = async (e) => {
+    const selectedAgency = e.target.value;
+    formBookCourse.setFieldValue('agency', selectedAgency);
+    formBookCourse.setFieldValue('class', '');
+
+    if (selectedAgency) {
+      const agencies = agencyData.filter(agency => agency.city === formBookCourse.values.city);
+      setFilteredAgencies(agencies);
+
+      await dispatch(GetClassesActionAsync(formBookCourse.values.course, selectedAgency));
     } else {
       setFilteredAgencies([]);
     }
@@ -146,7 +197,7 @@ const BookCourse = ({selectedCourseId}) => {
                 <div className="col-xl-5">
                   <div className="ticket-form p-5 bg-white rounded-lg shadow-lg">
                     <h2 className="text-primary text-uppercase mb-4 text-center">
-                      Tư Vấn Khóa Học
+                      Đăng Ký Khóa Học
                     </h2>
                     <form onSubmit={formBookCourse.handleSubmit}>
                       <div className="row g-4">
@@ -204,7 +255,7 @@ const BookCourse = ({selectedCourseId}) => {
                             onBlur={formBookCourse.handleBlur}
                             value={formBookCourse.values.course}
                           >
-                            <option value="">Chọn khóa học bạn muốn tư vấn</option>
+                            <option value="">Chọn khóa học bạn muốn đăng ký</option>
                             {courseAvailable.map((courseItem) => (
                               <option key={courseItem.id} value={courseItem.id}>
                                 {courseItem.name}
@@ -243,7 +294,7 @@ const BookCourse = ({selectedCourseId}) => {
                             className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.agency && formBookCourse.errors.agency ? 'is-invalid' : ''}`}
                             id="agency"
                             name="agency"
-                            onChange={formBookCourse.handleChange}
+                            onChange={handleAgencyChange}
                             onBlur={formBookCourse.handleBlur}
                             value={formBookCourse.values.agency}
                             disabled={!formBookCourse.values.city}
@@ -260,13 +311,34 @@ const BookCourse = ({selectedCourseId}) => {
                           )}
                         </div>
                         <div className="col-12">
+                          <select
+                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.class && formBookCourse.errors.class ? 'is-invalid' : ''}`}
+                            id="class"
+                            name="class"
+                            onChange={formBookCourse.handleChange}
+                            onBlur={formBookCourse.handleBlur}
+                            value={formBookCourse.values.class}
+                            disabled={!formBookCourse.values.agency}
+                          >
+                            <option value="">Bước 3: Chọn lịch học</option>
+                            {classData.map((classItem) => (
+                              <option key={classItem.id} value={classItem.id}>
+                                {`${translateDayOfWeek(classItem.dayOfWeek)} - Bắt đầu ${moment(classItem.startDate).format('DD/MM/YYYY')}`}
+                              </option>
+                            ))}
+                          </select>
+                          {formBookCourse.touched.class && formBookCourse.errors.class && (
+                            <div className="invalid-feedback text-danger">{formBookCourse.errors.class}</div>
+                          )}
+                        </div>
+                        <div className="col-12">
                           <Spin spinning={isLoading}>
                             <button
                               type="submit"
                               className="btn btn-primary w-100 py-2 px-5 text-white font-weight-bold"
                               disabled={isLoading}
                             >
-                              Tư Vấn
+                              Đăng Ký và Thanh Toán
                             </button>
                           </Spin>
                         </div>
@@ -283,4 +355,4 @@ const BookCourse = ({selectedCourseId}) => {
   );
 }
 
-export default BookCourse
+export default BookCourse;

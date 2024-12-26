@@ -15,15 +15,15 @@ const OurService = () => {
       delay: "0.8s",
     },
     {
-      icon: "fas fa-utensils fa-4x",
-      title: "Ăn uống",
-      description: "Ăn uống nhẹ trong các buổi học và giải lao.",
+      icon: "fa fa-desktop fa-4x",
+      title: "Vật chất",
+      description: "Cơ sở vật chất đào chuẩn quốc tế.",
       delay: "0.4s",
     },
     {
       icon: "fa fa-gamepad fa-4x",
-      title: "Trò chơi",
-      description: "Cung cấp các trò chơi cờ bàn cho học viên giải trí.",
+      title: "Trải nghiệm",
+      description: "Trải nghiệm môi trường học sáng tạo chuyên nghiệp.",
       delay: "0.6s",
     }
   ];

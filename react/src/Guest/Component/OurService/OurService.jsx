@@ -9,9 +9,15 @@ const OurService = () => {
       delay: "0.2s",
     },
     {
-      icon: "fas fa-utensils fa-4x",
-      title: "Ăn uống",
-      description: "Tái tạo năng lượng và cảm hứng.",
+      icon: "fa fa-users fa-4x",
+      title: "Giảng viên",
+      description: "Đội ngũ giảng viên với nhiều năm kinh nghiệm giảng dạy và làm việc tại các công ty lớn.",
+      delay: "0.8s",
+    },
+    {
+      icon: "fa fa-desktop fa-4x",
+      title: "Vật chất",
+      description: "Cơ sở vật chất đào chuẩn quốc tế.",
       delay: "0.4s",
     },
     {
@@ -19,13 +25,7 @@ const OurService = () => {
       title: "Trải nghiệm",
       description: "Trải nghiệm môi trường học sáng tạo chuyên nghiệp.",
       delay: "0.6s",
-    },
-    {
-      icon: "fas fa-bed fa-4x",
-      title: "Sáng tạo",
-      description: "Thư giãn và phục hồi năng lượng mỗi ngày.",
-      delay: "0.8s",
-    },
+    }
 ];
 
 
