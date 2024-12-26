@@ -8,6 +8,7 @@ import HomePage from "./Guest/Page/Home/HomePage";
 import AgencyRegistration from "./Guest/Page/AgencyRegistration/AgencyRegistration";
 import FranchiseReview from "./Guest/Page/FranchiseReview/FranchiseReview";
 import Login from "./Guest/Page/Login/Login";
+import PaymentSuccess from "./Guest/Page/PaymentSuccess/PaymentSuccess";
 
 function App() {
   return (
@@ -18,9 +19,10 @@ function App() {
           <Route path="register" element={<Register></Register>} />
           <Route path="" element={<TempUIUser></TempUIUser>}>
             <Route path="" element={<HomePage></HomePage>}></Route>
-            <Route path="/for-franchise" element={<FranchiseReview/>}></Route>
+            <Route path="/for-franchise" element={<FranchiseReview />}></Route>
             {/* <Route path="profile" element={<Profile></Profile>}></Route> */}
             <Route path="register-agency" element={<AgencyRegistration />}></Route>
+            <Route path="payment-success" element={<PaymentSuccess />} />
           </Route>
           {/* <Route path="user/detail/:id" element={<TestPage/>} /> */}
 
