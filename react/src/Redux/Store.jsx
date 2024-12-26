@@ -5,6 +5,7 @@ import CourseCategoryReducer from "./ReducerAPI/CourseCategoryReducer";
 import CourseReducer from "./ReducerAPI/CourseReducer";
 import AgencyReducer from "./ReducerAPI/AgencyReducer";
 import RegisterCourseReducer from "./ReducerAPI/RegisterCourseReducer";
+import ClassReducer from "./ReducerAPI/ClassReducer";
 export const store = configureStore({
   reducer: {
     number: (state = 1) => state,
@@ -14,5 +15,6 @@ export const store = configureStore({
     CourseReducer,
     AgencyReducer,
     RegisterCourseReducer,
+    ClassReducer,
   },
 });
