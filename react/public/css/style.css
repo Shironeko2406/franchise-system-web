@@ -1060,7 +1060,9 @@
     transform: scale(1.1);
 } */
 
+/* -----------Mục component thêm------------------------------- */
 
+/* View course */
 .course-item {
     border-radius: 10px;
     overflow: hidden;
@@ -1153,3 +1155,332 @@
 }
 
 
+/* TimeLine fulllstack */
+
+/* .timeline-container {
+    padding: 5rem 0;
+    background-color: #f8f9fa;
+  }
+  
+  .timeline-content {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  .timeline-text-center {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .timeline-section-title {
+    display: inline-block;
+    padding: 0 1rem;
+    color: #007bff;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  
+  .timeline-main-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .timeline::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    background-color: #007bff;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+  }
+  
+  .timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+  }
+  
+  .timeline-item.left {
+    left: 0;
+  }
+  
+  .timeline-item.right {
+    left: 50%;
+  }
+  
+  .timeline-item.left::before,
+  .timeline-item.right::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    border: medium solid #fff;
+  }
+  
+  .timeline-item.left::before {
+    right: 30px;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #fff;
+  }
+  
+  .timeline-item.right::before {
+    left: 30px;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #fff transparent transparent;
+  }
+  
+  .timeline-item-content {
+    padding: 20px 30px;
+    background-color: white;
+    position: relative;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .timeline-icon-wrapper {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: #007bff;
+    top: 16px;
+    border-radius: 50%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .timeline-item.left .timeline-icon-wrapper {
+    right: -20px;
+  }
+  
+  .timeline-item.right .timeline-icon-wrapper {
+    left: -20px;
+  }
+  
+  .timeline-icon {
+    color: white;
+  }
+  
+  .timeline-item-title {
+    margin-top: 0;
+    color: #007bff;
+  }
+  
+  .timeline-item-description {
+    margin-bottom: 0;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .timeline::after {
+      left: 31px;
+    }
+    
+    .timeline-item {
+      width: 100%;
+      padding-left: 70px;
+      padding-right: 25px;
+    }
+    
+    .timeline-item::before {
+      left: 60px;
+      border: medium solid white;
+      border-width: 10px 10px 10px 0;
+      border-color: transparent white transparent transparent;
+    }
+  
+    .timeline-item.left::after,
+    .timeline-item.right::after {
+      left: 15px;
+    }
+  
+    .timeline-item.right {
+      left: 0%;
+    }
+  
+    .timeline-icon-wrapper {
+      left: 10px !important;
+    }
+  }
+  
+   */
+
+
+
+   .timeline-container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 20px 0;
+    
+    /* Tùy chỉnh thanh scroll tròn trịa hơn */
+    &::-webkit-scrollbar {
+      height: 10px;
+    }
+  
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 20px; /* Tăng độ tròn của track */
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background: #007bff;
+      border-radius: 20px; /* Tăng độ tròn của thumb */
+      border: 2px solid #f1f1f1; /* Thêm viền trắng cho thumb */
+      transition: all 0.3s ease;
+    }
+  
+    &::-webkit-scrollbar-thumb:hover {
+      background: #0056b3;
+      border-width: 1px; /* Giảm viền khi hover */
+    }
+  
+    scrollbar-width: thin;
+    scrollbar-color: #007bff #f1f1f1;
+  }
+  
+  .timeline {
+    display: flex;
+    position: relative;
+    gap: 40px;
+    min-width: max-content;
+    padding: 20px 10px; /* Thêm padding để tránh che nội dung */
+  }
+  
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+    height: 6px; /* Tăng độ dày của line */
+    background-color: #e0e0e0;
+    border-radius: 10px; /* Bo tròn line */
+    z-index: 1;
+  }
+  
+  .timeline-item {
+    flex: 0 0 300px;
+    position: relative;
+    z-index: 2;
+    scroll-snap-align: start;
+  }
+  
+  .timeline-icon {
+    width: 70px; /* Tăng kích thước */
+    height: 70px;
+    border-radius: 50%;
+    background-color: #007bff;
+    background-image: linear-gradient(45deg, #007bff, #00bfff); /* Thêm gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 0 6px #fff, /* Tăng độ dày viền trắng */
+                inset 0 2px 0 rgba(0, 0, 0, .08),
+                0 3px 0 4px rgba(0, 0, 0, .05);
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-icon:hover {
+    transform: scale(1.1) rotate(5deg); /* Thêm hiệu ứng xoay nhẹ khi hover */
+  }
+  
+  .timeline-icon i {
+    color: #fff;
+    font-size: 28px; /* Tăng kích thước icon */
+  }
+  
+  .timeline-content {
+    background-color: #fff;
+    border-radius: 20px; /* Tăng độ tròn các góc */
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 300px;
+    border: 1px solid rgba(0, 123, 255, 0.1); /* Thêm viền nhẹ */
+  }
+  
+  .timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+    border-color: rgba(0, 123, 255, 0.2);
+  }
+  
+  .timeline-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: #007bff;
+    word-wrap: break-word;
+    font-weight: 600;
+  }
+  
+  .timeline-content p {
+    font-size: 0.95rem;
+    color: #666;
+    word-wrap: break-word;
+    line-height: 1.6;
+  }
+  
+  /* Hiệu ứng scroll mượt */
+  .timeline-container {
+    scroll-behavior: smooth;
+  }
+
+  
+  @media (max-width: 768px) {
+    .timeline {
+      gap: 30px;
+      padding: 15px 8px;
+    }
+  
+    .timeline-item {
+      flex: 0 0 250px;
+    }
+  
+    .timeline-icon {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .timeline-content {
+      padding: 20px;
+      border-radius: 15px;
+    }
+  
+    .timeline-content h3 {
+      font-size: 1.1rem;
+    }
+  
+    .timeline-content p {
+      font-size: 0.9rem;
+    }
+    
+    .timeline-container::-webkit-scrollbar {
+      height: 8px;
+    }
+  }
+  
+  /* Thêm hiệu ứng active state cho timeline-item */
+  .timeline-item.active .timeline-icon {
+    background-image: linear-gradient(45deg, #00bfff, #007bff);
+    transform: scale(1.1);
+  }
+  
+  .timeline-item.active .timeline-content {
+    border-color: rgba(0, 123, 255, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.2);
+  }
