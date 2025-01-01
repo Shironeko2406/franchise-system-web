@@ -12,6 +12,7 @@ import Article from "../../Component/Article/Article";
 import Course from "../../Component/Course/Course";
 import ViewCourse from "../../Component/ViewCourse/ViewCourse";
 import { useOutletContext } from "react-router-dom";
+import TimeLineFullStack from "../../Component/TimeLineFullStack/TimeLineFullStack";
 
 const HomePage = () => {
   const [selectedCourseId, setSelectedCourseId] = useState(""); // Lưu ID khóa học được chọn
@@ -33,6 +34,7 @@ const HomePage = () => {
       {/* <FormFranchise></FormFranchise> */}
       <BookCourse selectedCourseId={selectedCourseId}/>
       <Article/>
+      <TimeLineFullStack/>
       <ViewCourse ref={viewCourseRef} onRegisterNow={handleRegisterNow}/>
       <AboutUs/>
       <OurService/>
