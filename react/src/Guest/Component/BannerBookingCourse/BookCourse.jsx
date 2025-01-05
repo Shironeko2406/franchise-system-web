@@ -41,30 +41,30 @@ const validationSchema = Yup.object({
     .required('Vui lòng chọn khóa học bạn muốn tư vấn'),
 });
 
-const translateDayOfWeek = (dayOfWeekString) => {
-  const dayTranslation = {
-    Monday: "Thứ Hai",
-    Tuesday: "Thứ Ba",
-    Wednesday: "Thứ Tư",
-    Thursday: "Thứ Năm",
-    Friday: "Thứ Sáu",
-    Saturday: "Thứ Bảy",
-    Sunday: "Chủ Nhật",
-  };
+// const translateDayOfWeek = (dayOfWeekString) => {
+//   const dayTranslation = {
+//     Monday: "Thứ Hai",
+//     Tuesday: "Thứ Ba",
+//     Wednesday: "Thứ Tư",
+//     Thursday: "Thứ Năm",
+//     Friday: "Thứ Sáu",
+//     Saturday: "Thứ Bảy",
+//     Sunday: "Chủ Nhật",
+//   };
 
-  const [days, startTime, endTime] = dayOfWeekString.split("-");
+//   const [days, startTime, endTime] = dayOfWeekString.split("-");
 
-  const translatedDays = days
-    .split(", ")
-    .map((day) => day.trim())
-    .map((day) => dayTranslation[day] || day)
-    .join(", ");
+//   const translatedDays = days
+//     .split(", ")
+//     .map((day) => day.trim())
+//     .map((day) => dayTranslation[day] || day)
+//     .join(", ");
 
-  const formattedStartTime = startTime.slice(0, 5);
-  const formattedEndTime = endTime.slice(0, 5);
+//   const formattedStartTime = startTime.slice(0, 5);
+//   const formattedEndTime = endTime.slice(0, 5);
 
-  return `${translatedDays} - ${formattedStartTime} đến ${formattedEndTime}`;
-};
+//   return `${translatedDays} - ${formattedStartTime} đến ${formattedEndTime}`;
+// };
 
 const BookCourse = ({ selectedCourseId }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -75,6 +75,8 @@ const BookCourse = ({ selectedCourseId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [cities, setCities] = useState([]);
   const [filteredAgencies, setFilteredAgencies] = useState([]);
+
+  console.log(classData)
 
   useEffect(() => {
     dispatch(GetAgencyAddressesActionAsync());
@@ -321,9 +323,10 @@ const BookCourse = ({ selectedCourseId }) => {
                             disabled={!formBookCourse.values.agency}
                           >
                             <option value="">Bước 3: Chọn lịch học</option>
-                            {classData.map((classItem) => (
+                            {classData?.map((classItem) => (
                               <option key={classItem.id} value={classItem.id}>
-                                {`${translateDayOfWeek(classItem.dayOfWeek)} - Bắt đầu ${moment(classItem.startDate).format('DD/MM/YYYY')}`}
+                                {/* {`${translateDayOfWeek(classItem.dayOfWeek)} - Bắt đầu ${moment(classItem.startDate).format('DD/MM/YYYY')}`} */}
+                                {`Bắt đầu ${moment(classItem.startDate).format('DD/MM/YYYY')}`}
                               </option>
                             ))}
                           </select>
