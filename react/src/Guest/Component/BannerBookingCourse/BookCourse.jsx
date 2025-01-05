@@ -43,30 +43,30 @@ const validationSchema = Yup.object({
     .required('Vui lòng chọn khóa học bạn muốn tư vấn'),
 });
 
-const translateDayOfWeek = (dayOfWeekString) => {
-  const dayTranslation = {
-    Monday: "Thứ Hai",
-    Tuesday: "Thứ Ba",
-    Wednesday: "Thứ Tư",
-    Thursday: "Thứ Năm",
-    Friday: "Thứ Sáu",
-    Saturday: "Thứ Bảy",
-    Sunday: "Chủ Nhật",
-  };
+// const translateDayOfWeek = (dayOfWeekString) => {
+//   const dayTranslation = {
+//     Monday: "Thứ Hai",
+//     Tuesday: "Thứ Ba",
+//     Wednesday: "Thứ Tư",
+//     Thursday: "Thứ Năm",
+//     Friday: "Thứ Sáu",
+//     Saturday: "Thứ Bảy",
+//     Sunday: "Chủ Nhật",
+//   };
 
-  const [days, startTime, endTime] = dayOfWeekString.split("-");
+//   const [days, startTime, endTime] = dayOfWeekString.split("-");
 
-  const translatedDays = days
-    .split(", ")
-    .map((day) => day.trim())
-    .map((day) => dayTranslation[day] || day)
-    .join(", ");
+//   const translatedDays = days
+//     .split(", ")
+//     .map((day) => day.trim())
+//     .map((day) => dayTranslation[day] || day)
+//     .join(", ");
 
-  const formattedStartTime = startTime.slice(0, 5);
-  const formattedEndTime = endTime.slice(0, 5);
+//   const formattedStartTime = startTime.slice(0, 5);
+//   const formattedEndTime = endTime.slice(0, 5);
 
-  return `${translatedDays} - ${formattedStartTime} đến ${formattedEndTime}`;
-};
+//   return `${translatedDays} - ${formattedStartTime} đến ${formattedEndTime}`;
+// };
 
 const BookCourse = ({ selectedCourseId }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -80,6 +80,7 @@ const BookCourse = ({ selectedCourseId }) => {
   const [districts, setDistricts] = useState([]);
   const [filteredAgencies, setFilteredAgencies] = useState([]);
 
+  console.log(classData)
   const formBookCourse = useFormik({
     initialValues: {
       name: "",
@@ -351,6 +352,28 @@ const BookCourse = ({ selectedCourseId }) => {
                           </select>
                           {formBookCourse.touched.agency && formBookCourse.errors.agency && (
                             <div className="invalid-feedback text-danger">{formBookCourse.errors.agency}</div>
+                          )}
+                        </div>
+                        <div className="col-12">
+                          <select
+                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.class && formBookCourse.errors.class ? 'is-invalid' : ''}`}
+                            id="class"
+                            name="class"
+                            onChange={formBookCourse.handleChange}
+                            onBlur={formBookCourse.handleBlur}
+                            value={formBookCourse.values.class}
+                            disabled={!formBookCourse.values.agency}
+                          >
+                            <option value="">Bước 3: Chọn lịch học</option>
+                            {classData?.map((classItem) => (
+                              <option key={classItem.id} value={classItem.id}>
+                                {/* {`${translateDayOfWeek(classItem.dayOfWeek)} - Bắt đầu ${moment(classItem.startDate).format('DD/MM/YYYY')}`} */}
+                                {`Bắt đầu ${moment(classItem.startDate).format('DD/MM/YYYY')}`}
+                              </option>
+                            ))}
+                          </select>
+                          {formBookCourse.touched.class && formBookCourse.errors.class && (
+                            <div className="invalid-feedback text-danger">{formBookCourse.errors.class}</div>
                           )}
                         </div>
                         <div className="col-12">
