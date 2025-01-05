@@ -6,9 +6,9 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAgencyAddressesActionAsync } from "../../../Redux/ReducerAPI/AgencyReducer";
 import { GetAllCoursesAvailableActionAsync } from "../../../Redux/ReducerAPI/CourseReducer";
-import { RegisterCourseActionAsync } from "../../../Redux/ReducerAPI/RegisterCourseReducer";
 import { Spin } from "antd";
 import { GetClassesActionAsync } from "../../../Redux/ReducerAPI/ClassReducer";
+import { useNavigate } from "react-router-dom";
 
 const carouselData = [
   {
@@ -35,6 +35,8 @@ const validationSchema = Yup.object({
     .max(11, 'Số điện thoại không được vượt quá 11 chữ số'),
   city: Yup.string()
     .required('Vui lòng chọn tỉnh/thành phố'),
+  district: Yup.string()
+    .required('Vui lòng chọn quận/huyện'),
   agency: Yup.string()
     .required('Vui lòng chọn chi nhánh'),
   course: Yup.string()
@@ -69,14 +71,45 @@ const validationSchema = Yup.object({
 const BookCourse = ({ selectedCourseId }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { agencyData } = useSelector((state) => state.AgencyReducer);
   const { courseAvailable } = useSelector((state) => state.CourseReducer);
   const { classData } = useSelector((state) => state.ClassReducer);
   const [isLoading, setIsLoading] = useState(false);
   const [cities, setCities] = useState([]);
+  const [districts, setDistricts] = useState([]);
   const [filteredAgencies, setFilteredAgencies] = useState([]);
 
   console.log(classData)
+  const formBookCourse = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      phone: "",
+      city: "",
+      district: "",
+      agency: "",
+      course: selectedCourseId || "",
+      class: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      setIsLoading(true);
+      const selectedCourse = courseAvailable.find(course => course.id === values.course);
+      const selectedAgency = agencyData.find(agency => agency.id === values.agency);
+      const registrationData = {
+        studentName: values.name,
+        email: values.email,
+        phoneNumber: values.phone,
+        agency: values.agency,
+        agencyFullAddress: selectedAgency ? selectedAgency.fullAddress : '',
+        course: values.course,
+        courseName: selectedCourse ? selectedCourse.name : '',
+      };
+      setIsLoading(false);
+      navigate('/schedule', { state: { registrationData } });
+    },
+  });
 
   useEffect(() => {
     dispatch(GetAgencyAddressesActionAsync());
@@ -96,42 +129,15 @@ const BookCourse = ({ selectedCourseId }) => {
     }
   }, [selectedCourseId]);
 
-  const formBookCourse = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      phone: "",
-      city: "",
-      agency: "",
-      course: selectedCourseId || "",
-      class: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: async (values, { resetForm }) => {
-      setIsLoading(true);
-      const valuesSend = {
-        studentName: values.name,
-        email: values.email,
-        phoneNumber: values.phone,
-        agencyId: values.agency,
-        courseId: values.course,
-        classId: values.class,
-      };
-      try {
-        const response = await dispatch(RegisterCourseActionAsync(valuesSend));
-        if (response.isSuccess && response.data) {
-          window.location.href = response.data;
-        } else {
-          console.error("Registration failed:", response.message);
-        }
-      } catch (error) {
-        console.error("Error during registration:", error);
-      } finally {
-        setIsLoading(false);
-        resetForm();
-      }
-    },
-  });
+  useEffect(() => {
+    if (formBookCourse.values.city) {
+      const selectedCityData = agencyData.filter(agency => agency.city === formBookCourse.values.city);
+      const uniqueDistricts = [...new Set(selectedCityData.map(agency => agency.district))];
+      setDistricts(uniqueDistricts);
+    } else {
+      setDistricts([]);
+    }
+  }, [formBookCourse.values.city, agencyData]);
 
   const handlePhoneChange = (e) => {
     const value = e.target.value.replace(/\D/g, '');
@@ -141,11 +147,26 @@ const BookCourse = ({ selectedCourseId }) => {
   const handleCityChange = (e) => {
     const selectedCity = e.target.value;
     formBookCourse.setFieldValue('city', selectedCity);
+    formBookCourse.setFieldValue('district', '');
     formBookCourse.setFieldValue('agency', '');
     formBookCourse.setFieldValue('class', '');
 
     if (selectedCity) {
       const agencies = agencyData.filter(agency => agency.city === selectedCity);
+      setFilteredAgencies(agencies);
+    } else {
+      setFilteredAgencies([]);
+    }
+  };
+
+  const handleDistrictChange = (e) => {
+    const selectedDistrict = e.target.value;
+    formBookCourse.setFieldValue('district', selectedDistrict);
+    formBookCourse.setFieldValue('agency', '');
+    formBookCourse.setFieldValue('class', '');
+
+    if (selectedDistrict) {
+      const agencies = agencyData.filter(agency => agency.city === formBookCourse.values.city && agency.district === selectedDistrict);
       setFilteredAgencies(agencies);
     } else {
       setFilteredAgencies([]);
@@ -158,7 +179,7 @@ const BookCourse = ({ selectedCourseId }) => {
     formBookCourse.setFieldValue('class', '');
 
     if (selectedAgency) {
-      const agencies = agencyData.filter(agency => agency.city === formBookCourse.values.city);
+      const agencies = agencyData.filter(agency => agency.city === formBookCourse.values.city && agency.district === formBookCourse.values.district);
       setFilteredAgencies(agencies);
 
       await dispatch(GetClassesActionAsync(formBookCourse.values.course, selectedAgency));
@@ -293,18 +314,39 @@ const BookCourse = ({ selectedCourseId }) => {
                         </div>
                         <div className="col-12">
                           <select
+                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.district && formBookCourse.errors.district ? 'is-invalid' : ''}`}
+                            id="district"
+                            name="district"
+                            onChange={handleDistrictChange}
+                            onBlur={formBookCourse.handleBlur}
+                            value={formBookCourse.values.district}
+                            disabled={!formBookCourse.values.city}
+                          >
+                            <option value="">Bước 2: Chọn quận/huyện</option>
+                            {districts.map((district) => (
+                              <option key={district} value={district}>
+                                {district}
+                              </option>
+                            ))}
+                          </select>
+                          {formBookCourse.touched.district && formBookCourse.errors.district && (
+                            <div className="invalid-feedback text-danger">{formBookCourse.errors.district}</div>
+                          )}
+                        </div>
+                        <div className="col-12">
+                          <select
                             className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.agency && formBookCourse.errors.agency ? 'is-invalid' : ''}`}
                             id="agency"
                             name="agency"
                             onChange={handleAgencyChange}
                             onBlur={formBookCourse.handleBlur}
                             value={formBookCourse.values.agency}
-                            disabled={!formBookCourse.values.city}
+                            disabled={!formBookCourse.values.district}
                           >
-                            <option value="">Bước 2: Chọn chi nhánh</option>
+                            <option value="">Bước 3: Chọn chi nhánh</option>
                             {filteredAgencies.map((agency) => (
                               <option key={agency.id} value={agency.id}>
-                                {agency.fullAddress}
+                                {agency.fullAddress.replace(`, ${formBookCourse.values.district}, ${formBookCourse.values.city}`, '').trim()}
                               </option>
                             ))}
                           </select>
@@ -341,7 +383,7 @@ const BookCourse = ({ selectedCourseId }) => {
                               className="btn btn-primary w-100 py-2 px-5 text-white font-weight-bold"
                               disabled={isLoading}
                             >
-                              Đăng Ký và Thanh Toán
+                              Tiếp tục chọn lịch học
                             </button>
                           </Spin>
                         </div>

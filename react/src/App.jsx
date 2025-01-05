@@ -9,6 +9,7 @@ import AgencyRegistration from "./Guest/Page/AgencyRegistration/AgencyRegistrati
 import FranchiseReview from "./Guest/Page/FranchiseReview/FranchiseReview";
 import Login from "./Guest/Page/Login/Login";
 import PaymentSuccess from "./Guest/Page/PaymentSuccess/PaymentSuccess";
+import SchedulePage from "./Guest/Component/SchedulePage/Schedule";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             {/* <Route path="profile" element={<Profile></Profile>}></Route> */}
             <Route path="register-agency" element={<AgencyRegistration />}></Route>
             <Route path="payment-success" element={<PaymentSuccess />} />
+            <Route path="schedule" element={<SchedulePage />} />
           </Route>
           {/* <Route path="user/detail/:id" element={<TestPage/>} /> */}
 
