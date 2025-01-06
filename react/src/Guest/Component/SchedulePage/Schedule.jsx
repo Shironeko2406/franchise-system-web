@@ -23,7 +23,7 @@ const translateDayOfWeek = (dayOfWeekString) => {
         Sunday: "Chủ Nhật",
     };
 
-    return dayOfWeekString.split(", ").map(day => dayTranslation[day.trim()] || day.trim()).join(", ");
+    return dayOfWeekString.split(/, ?/).map(day => dayTranslation[day.trim()] || day.trim()).join(", ");
 };
 
 const timeSlots = [
@@ -52,7 +52,7 @@ const Schedule = () => {
     }, [dispatch, registrationData]);
 
     const filteredClasses = classes.filter(classItem => {
-        const classDays = classItem.dayOfWeek.split(", ").map(day => translateDayOfWeek(day.trim()));
+        const classDays = classItem.dayOfWeek.split(/, ?/).map(day => translateDayOfWeek(day.trim()));
         const selectedDaysMatch = selectedDays.some(day => classDays.includes(day));
 
         const classStartTime = moment(classItem.slotStart, 'HH:mm:ss');
