@@ -52,6 +52,7 @@ const Schedule = () => {
     }, [dispatch, registrationData]);
 
     const filteredClasses = classes.filter(classItem => {
+        console.log('chào')
         const classDays = classItem.dayOfWeek.split(", ").map(day => translateDayOfWeek(day.trim()));
         const selectedDaysMatch = selectedDays.some(day => classDays.includes(day));
 
