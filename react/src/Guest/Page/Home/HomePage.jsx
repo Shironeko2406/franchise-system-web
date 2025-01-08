@@ -38,7 +38,7 @@ const HomePage = () => {
       <ViewCourse ref={viewCourseRef} onRegisterNow={handleRegisterNow}/>
       <AboutUs/>
       <OurService/>
-      {/* <PackagesTicket/> */}
+      <PackagesTicket/>
       {/* <Course/> */}
       {/* <Achievement/> */}
       {/* <Post/> */}

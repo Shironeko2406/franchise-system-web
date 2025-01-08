@@ -14,7 +14,7 @@ const ViewCourse = forwardRef(({ onRegisterNow }, ref) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(GetCourseCategoryActionAsync()).then(() => setLoading(false));
+    dispatch(GetCourseCategoryActionAsync())
   }, []);
 
   useEffect(() => {
