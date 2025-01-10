@@ -355,28 +355,6 @@ const BookCourse = ({ selectedCourseId }) => {
                           )}
                         </div>
                         <div className="col-12">
-                          <select
-                            className={`form-select border-0 py-2 bg-light ${formBookCourse.touched.class && formBookCourse.errors.class ? 'is-invalid' : ''}`}
-                            id="class"
-                            name="class"
-                            onChange={formBookCourse.handleChange}
-                            onBlur={formBookCourse.handleBlur}
-                            value={formBookCourse.values.class}
-                            disabled={!formBookCourse.values.agency}
-                          >
-                            <option value="">Bước 3: Chọn lịch học</option>
-                            {classData?.map((classItem) => (
-                              <option key={classItem.id} value={classItem.id}>
-                                {/* {`${translateDayOfWeek(classItem.dayOfWeek)} - Bắt đầu ${moment(classItem.startDate).format('DD/MM/YYYY')}`} */}
-                                {`Bắt đầu ${moment(classItem.startDate).format('DD/MM/YYYY')}`}
-                              </option>
-                            ))}
-                          </select>
-                          {formBookCourse.touched.class && formBookCourse.errors.class && (
-                            <div className="invalid-feedback text-danger">{formBookCourse.errors.class}</div>
-                          )}
-                        </div>
-                        <div className="col-12">
                           <Spin spinning={isLoading}>
                             <button
                               type="submit"
