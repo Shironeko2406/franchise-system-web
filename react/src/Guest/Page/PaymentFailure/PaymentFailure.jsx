@@ -31,11 +31,11 @@ const PaymentFailure = () => {
                         </Paragraph>
                     </div>
 
-                    <div style={{ textAlign: 'center' }}>
+                    {/* <div style={{ textAlign: 'center' }}>
                         <Button type="primary" size="large" href="/">
                             Thử lại
                         </Button>
-                    </div>
+                    </div> */}
                 </Result>
             </Card>
         </div>

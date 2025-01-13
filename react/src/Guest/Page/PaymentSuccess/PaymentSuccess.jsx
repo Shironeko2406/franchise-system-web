@@ -32,7 +32,7 @@ const PaymentSuccess = () => {
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <Button type="primary" size="large" href="#">
+                        <Button type="primary" size="large" href="https://future-tech-franchise-v2.vercel.app/">
                             Bắt đầu học ngay
                         </Button>
                     </div>
