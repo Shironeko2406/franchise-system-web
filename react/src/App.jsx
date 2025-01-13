@@ -24,8 +24,8 @@ function App() {
             <Route path="/for-franchise" element={<FranchiseReview />}></Route>
             {/* <Route path="profile" element={<Profile></Profile>}></Route> */}
             <Route path="register-agency" element={<AgencyRegistration />}></Route>
-            <Route path="payment-success" element={<PaymentSuccess />} />
-            <Route path="payment-failure" element={<PaymentFailure />} />
+            <Route path="course-payment-success" element={<PaymentSuccess />} />
+            <Route path="course-payment-failure" element={<PaymentFailure />} />
             <Route path="schedule" element={<SchedulePage />} />
           </Route>
           {/* <Route path="user/detail/:id" element={<TestPage/>} /> */}
